@@ -1,4 +1,4 @@
-# Idea of a block
+# Block Idee
 import hashlib
 import time
 
