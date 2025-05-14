@@ -1,6 +1,4 @@
-### Coming soon on my birthday 2026, sorry
-
-# 🔐 CryptGuardian 
+# 🔐 CryptGuardian - coming soon
 #### **Seed Validation Tool** - Secure Your Connections with Ease
 
 ## 🚀 **Project Overview**
