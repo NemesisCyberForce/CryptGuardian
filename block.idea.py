@@ -1,3 +1,4 @@
+# Idea of a block
 import hashlib
 import time
 
