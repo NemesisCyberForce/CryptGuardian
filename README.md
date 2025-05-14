@@ -100,7 +100,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 👥 **Contact**
 
-Have questions or want to contribute? Feel free to reach out through GitHub Issues or email at \[[your.email@example.com](mailto:email@example.com)].
+Have questions or want to contribute? Feel free to reach out through GitHub Issues or email at \[[soon@example.com](mailto:email@example.com)].
 
 
 Thank you for checking out **CryptGuardian* — Let's make security smarter, not harder! 🔒✨
