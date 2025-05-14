@@ -3,7 +3,7 @@
 
 ## 🚀 **Project Overview**
 
-In a world where data breaches and unauthorized access are increasing, the **Guardian Seed Validation Tool** offers a powerful solution for securing sensitive connections. This tool leverages cutting-edge cryptographic techniques, including **mnemonic seed phrases**, **HMAC signatures**, and **Nonces**, to ensure the integrity of your network communications. The goal is simple yet profound: **Detect manipulation and regenerate security instantly, not by relying on brute-force unbreakability.**
+In a world where data breaches and unauthorized access are increasing, the **CryptGuardian- Validation Tool** offers a powerful solution for securing sensitive connections. This tool leverages cutting-edge cryptographic techniques, including **mnemonic seed phrases**, **HMAC signatures**, and **Nonces**, to ensure the integrity of your network communications. The goal is simple yet profound: **Detect manipulation and regenerate security instantly, not by relying on brute-force unbreakability.**
 
 Instead of hoping your encryption is uncrackable, we create a security architecture that can **self-heal** and **detect tampering** in real time.
 
