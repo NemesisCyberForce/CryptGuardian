@@ -1,5 +1,6 @@
 python-dotenv
 openai
+anthropic
 requests
 numpy
 fastapi        
