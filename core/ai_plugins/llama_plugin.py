@@ -8,7 +8,7 @@ class LlamaPlugin(AIPlugin):
         self.api_token = api_key
     
     def analyze(self, prompt: str) -> str:
-        # Verwende das Llama 3 Modell über Replicate API
+        #  Llama 3 Modell über Replicate API
         output = replicate.run(
             "meta/llama-3-70b-instruct:dd2c4401272e0114efb08b7b8190fe29679e00579ecd003728ce6cefb9097dc7",
             input={
