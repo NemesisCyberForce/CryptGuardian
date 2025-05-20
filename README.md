@@ -108,7 +108,7 @@ Are you a security enthusiast, developer, or cryptography expert? **Contribute t
 
 ## ⚙️ **How To Get Started**
 
-1. Clone this repository:
+1. Fork and Clone this repository:
    ```bash
    git clone https://github.com/yourusername/cryptguardian.git
    ```
