@@ -9,23 +9,36 @@ cryptguardian/
 │
 ├── core/
 │   ├── __init__.py
-│   ├── nonce_based.py        ← Nonce + Blockchain Logic
-│   └── seed_crypto.py        ← Seed + HMAC Funktionen (später)
+│   ├── nonce_based.py          ← Nonce + Blockchain Logic
+│   ├── seed_crypto.py          ← Seed + HMAC Funktionen (später)
+│   ├── ai_guardian.py          ← zentrale KI-Logik (Dispatcher/Koordination)
+│   └── ai_plugins/             ← Plugin-System für verschiedene KIs
+│       ├── base.py             ← Abstrakte Plugin-Basis
+│       ├── claude_plugin.py
+│       ├── llama_plugin.py
+│       ├── mistral_plugin.py
+│       └── openai_plugin.py
 │
 ├── api/
-│   ├── fastapi_app.py        ← (optional) nur bei Bedarf
-│   ├── flask_app.py          ← (optional) nur bei Bedarf
+│   ├── fastapi_app.py          ← (optional) REST API mit FastAPI
+│   ├── flask_app.py            ← (optional) Alternative API mit Flask
 │
 ├── cli/
-│   └── guardian_cli.py       ← z. B. für manuelle Tests
+│   └── guardian_cli.py         ← Command-Line Interface
 │
 ├── monitor/
-│   └── ai_watcher.py          ← z. B. für manuelle Tests
+│   └── ai_watcher.py           ← Watchdog/Überwachung durch KI
 │
 ├── tests/
-│   └── test_nonce_logic.py   ← Unittests
+│   └── test_nonce_logic.py     ← Unittests für Kernlogik
 │
-└── main.py                   ← Einstiegspunkt
+├── main.py                     ← Einstiegspunkt der Anwendung
+├── requirements.txt            ← Abhängigkeiten
+├── .env                        ← Umgebungsvariablen (nicht ins Repo)
+├── .gitignore                  ← Git-Ignorierliste
+├── README.md                   ← Projektbeschreibung
+└── LICENSE                     ← Lizenztext
+
 
 ```
 ## 🚀 **Project Overview** ai_watcher.py 
