@@ -1,5 +1,8 @@
-
-# core/ai_plugins/mistral_plugin.py
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: core/ai_plugins/mistral_plugin.py
+# Version: 0.1
+# Comment: MitralAi Plugin
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
 from .base import AIPlugin
