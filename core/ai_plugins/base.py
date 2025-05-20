@@ -1,4 +1,8 @@
-# core/ai_plugins/base.py
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: core/ai_plugins/base.py
+# Version: 0.1
+# Comment: main class AIPlugin
 
 from abc import ABC, abstractmethod
 
