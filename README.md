@@ -1,5 +1,5 @@
 # 🔐 CryptGuardian - coming soon 
-## DO NOT USE! AT WORK. MAAYBE WILL NOT WORK! To Stupid IDea
+## DO NOT USE IT! I am AT WORK. MAYBE WILL NOT WORK! To Stupid IDea?!
 #### **Seed Validation Tool** - Secure Your Connections with Ease
 
 # Public creation project by NCF
