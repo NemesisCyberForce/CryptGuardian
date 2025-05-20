@@ -1,4 +1,8 @@
-# core/ai_plugins/llama_plugin.py
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: core/ai_plugins/llama_plugin.py
+# Version: 0.1
+# Comment: Llama Plugin over Replicate
 import replicate
 from .base import AIPlugin
 
