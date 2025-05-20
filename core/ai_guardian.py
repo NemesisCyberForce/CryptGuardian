@@ -1,19 +1,18 @@
-def analyze_request_with_ai(payload: dict, model: str = "gpt-4") -> dict:
-    # Preprocessing
-    prompt = f"""
-    Bitte analysiere folgenden sicherheitskritischen Request auf Anomalien:
-    {payload}
-    
-    Hinweise auf:
-    - Manipulation
-    - Replay-Attacken
-    - auffällige Nonce-Verwendung
-    - Zeitstempel-Inkonsistenz
-    """
-    # Beispiel für OpenAI
-    from openai import OpenAI
-    response = OpenAI().chat.completions.create(
-        model=model,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content
+# core/ai_plugins/openai_plugin.py
+
+from openai import OpenAI
+from .base import AIPlugin
+
+class OpenAIPlugin(AIPlugin):
+    def __init__(self, api_key: str):
+        self.client = OpenAI(api_key=api_key)
+
+    def analyze(self, prompt: str) -> str:
+        response = self.client.chat.completions.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return response.choices[0].message.content.strip()
+
+    def name(self) -> str:
+        return "openai"
