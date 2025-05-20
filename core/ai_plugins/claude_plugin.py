@@ -1,4 +1,8 @@
-# core/ai_plugins/claude_plugin.py
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: core/ai_plugins/claude_plugin.py
+# Version: 0.1
+# Comment: Anthropic ClaudeAi Plugin
 from anthropic import Anthropic
 from .base import AIPlugin
 
