@@ -1,4 +1,8 @@
-# core/ai_guardian.py
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: CryptGuardian/core/ai_guardian.py
+# Version: 0.1
+# Comment: Ai.Gurdian core
 import os
 from dotenv import load_dotenv
 from core.ai_plugins.base import AIPlugin  # Importiere die Basisklasse
