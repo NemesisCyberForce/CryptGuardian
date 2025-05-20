@@ -101,6 +101,7 @@ Are you a security enthusiast, developer, or cryptography expert? **Contribute t
 
 ### 📝 **To Do List**:
 - [x] Implement Nonce-based transaction validation
+- [x] Implement Ai Plugins Core
 - [ ] Explore integrating with blockchain for decentralized validation
 - [ ] Improve seed phrase generation and private key management
 - [ ] Add support for different cryptographic algorithms
