@@ -1,10 +1,11 @@
 # core/ai_guardian.py
 import os
 from dotenv import load_dotenv
-from core.ai_plugins.openai_plugin import OpenAIPlugin
-from core.ai_plugins.claude_plugin import ClaudePlugin
-from core.ai_plugins.mistral_plugin import MistralPlugin
-from core.ai_plugins.llama_plugin import LlamaPlugin
+from core.ai_plugins.base import AIPlugin  # Importiere die Basisklasse
+from core.ai_plugins.openai_plugin import OpenAIPlugin # Importiere Openai
+from core.ai_plugins.claude_plugin import ClaudePlugin # Importiere Claude
+from core.ai_plugins.mistral_plugin import MistralPlugin # Importiere Mistral
+from core.ai_plugins.llama_plugin import LlamaPlugin # Importiere Llama
 
 # Lädt .env aus Projektroot
 load_dotenv()
@@ -53,3 +54,7 @@ def analyze_with(plugin_name: str, prompt: str) -> str:
 def get_available_plugins() -> list:
     """Gibt eine Liste aller verfügbaren Plugin-Namen zurück"""
     return ["openai", "claude", "mistral", "llama"]
+
+def register_plugin(plugin: AIPlugin):
+    """Registriert ein benutzerdefiniertes Plugin"""
+    ai_plugins[plugin.name()] = plugin
