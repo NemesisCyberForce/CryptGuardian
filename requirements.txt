@@ -2,6 +2,7 @@ python-dotenv
 openai
 anthropic
 mistralai
+replicate
 requests
 numpy
 fastapi        
