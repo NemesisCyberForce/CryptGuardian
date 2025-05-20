@@ -82,7 +82,7 @@ This tool is for **secure environments** only. It should be used to protect sens
 Are you a security enthusiast, developer, or cryptography expert? **Contribute to the project** or share your ideas and feedback. Together, we can build a safer digital future.
 
 ### 📝 **To Do List**:
-- [ ] Implement Nonce-based transaction validation
+- [x] Implement Nonce-based transaction validation
 - [ ] Explore integrating with blockchain for decentralized validation
 - [ ] Improve seed phrase generation and private key management
 - [ ] Add support for different cryptographic algorithms
