@@ -1,6 +1,28 @@
-# 🔐 CryptGuardian - coming soon
+# 🔐 CryptGuardian - coming soon 
+## DO NOT USE! AT WORK. MAAYBE WILL NOT WORK! To Stupid IDea
 #### **Seed Validation Tool** - Secure Your Connections with Ease
 
+```
+cryptguardian/
+│
+├── core/
+│   ├── __init__.py
+│   ├── nonce_based.py        ← Nonce + Blockchain Logic
+│   └── seed_crypto.py        ← Seed + HMAC Funktionen (später)
+│
+├── api/
+│   ├── fastapi_app.py        ← (optional) nur bei Bedarf
+│   ├── flask_app.py          ← (optional) nur bei Bedarf
+│
+├── cli/
+│   └── guardian_cli.py       ← z. B. für manuelle Tests
+│
+├── tests/
+│   └── test_nonce_logic.py   ← Unittests
+│
+└── main.py                   ← Einstiegspunkt
+
+```
 ## 🚀 **Project Overview**
 
 In a world where data breaches and unauthorized access are increasing, the **CryptGuardian- Validation Tool** offers a powerful solution for securing sensitive connections. This tool leverages cutting-edge cryptographic techniques, including **mnemonic seed phrases**, **HMAC signatures**, and **Nonces**, to ensure the integrity of your network communications. The goal is simple yet profound: **Detect manipulation and regenerate security instantly, not by relying on brute-force unbreakability.**
