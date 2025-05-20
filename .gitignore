@@ -1,0 +1,6 @@
+.env
+_init_.py
+tmp
+tmp/*
+tests
+tests/*
