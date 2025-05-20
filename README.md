@@ -2,6 +2,8 @@
 ## DO NOT USE! AT WORK. MAAYBE WILL NOT WORK! To Stupid IDea
 #### **Seed Validation Tool** - Secure Your Connections with Ease
 
+# Public creation project by NCF
+
 ```
 cryptguardian/
 │
