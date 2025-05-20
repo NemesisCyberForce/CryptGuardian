@@ -1,5 +1,8 @@
-# core/ai_plugins/openai_plugin.py
-
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: core/ai_plugins/openai_plugin.py
+# Version: 0.1
+# Comment: OpenAi GPT Plugin
 from openai import OpenAI
 from .base import AIPlugin
 
