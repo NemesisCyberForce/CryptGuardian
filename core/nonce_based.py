@@ -1,3 +1,8 @@
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian 
+# File: CryptGuardian/core/nonce_based.py
+# Version: 0.1
+# Comment: Implement Nonce-based transaction validation
 import hashlib
 import time
 import secrets
