@@ -1,18 +1,18 @@
-# core/ai_plugins/openai_plugin.py
+# core/ai_guardian.py
 
-from openai import OpenAI
-from .base import AIPlugin
+from core.ai_plugins.openai_plugin import OpenAIPlugin
+# von anderen Plugins: from core.ai_plugins.mistral_plugin import ...
 
-class OpenAIPlugin(AIPlugin):
-    def __init__(self, api_key: str):
-        self.client = OpenAI(api_key=api_key)
+ai_plugins = {}
 
-    def analyze(self, prompt: str) -> str:
-        response = self.client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return response.choices[0].message.content.strip()
+def use_ai_plugin(name: str, **kwargs):
+    if name == "openai":
+        ai_plugins[name] = OpenAIPlugin(api_key=kwargs.get("api_key"))
+    # elif name == "claude": ...
+    else:
+        raise ValueError(f"Plugin {name} nicht verfügbar.")
 
-    def name(self) -> str:
-        return "openai"
+def analyze_with(plugin_name: str, prompt: str) -> str:
+    if plugin_name not in ai_plugins:
+        raise RuntimeError(f"Plugin {plugin_name} nicht initialisiert.")
+    return ai_plugins[plugin_name].analyze(prompt)
