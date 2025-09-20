@@ -1,16 +1,6 @@
-RESPONSIBLE SECURITY RESEARCH LICENSE
+Licensed under the Apache License, Version 2.0
 
-Copyright (c) 2025 Volkan Sah
-
-Permission is hereby granted to use, copy, modify, and distribute 
-this software solely for:
-- Legitimate security research
-- Educational purposes  
-- Defensive security implementations
-
-PROHIBITED USES:
-- Malicious attacks against systems without authorization
-- Commercial exploitation without explicit permission
-- Any illegal activities
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY.
+ADDITIONAL TERMS:
+This software is intended for legitimate security research and 
+defensive purposes only. Users must comply with all applicable 
+laws and regulations. Malicious use is strictly prohibited.
