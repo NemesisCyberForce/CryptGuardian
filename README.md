@@ -238,7 +238,7 @@ Chain Security Status:
 
 **ETHICAL SECURITY OPERATIONS LICENSE (ESOL v1.0)**
 
-**Copyright:** [Volkan Sah](https://github.com/volkansah)
+**Copyright:** [Volkan Sah//NCF](https://github.com/volkansah)
 
 **Important:** This tool is designed for legitimate security research and blockchain protection. Any malicious use is strictly prohibited and may violate local and international laws.
 
