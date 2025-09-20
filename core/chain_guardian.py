@@ -1,126 +1,115 @@
-# chain_guardian test idee
-# Dieser erweiterte Code führt folgende neue Funktionen ein:
+# Copyright 2025: NemesisCyberForce
+# App: CryptGuardian - ChainGuardian Module
+# Version: 0.1-alpha
 
-# ChainGuardian: Eine dedizierte Klasse zur Überwachung der Blockchain
-# ValidationPattern: Definiert Muster, nach denen gesucht werden soll
-# Erweiterte Analysefunktionen: Erkennt verschiedene Muster in den Blockchain-Daten
-#  Severity Levels: Verschiedene Wichtigkeitsstufen für gefundene Muster
 import hashlib
 import time
-import re
-from typing import List, Optional
+import secrets
+from typing import List, Dict, Any
+import numpy as np
+from collections import deque
 
-class ValidationPattern:
-    def __init__(self, pattern_name: str, pattern_regex: str, severity: str = "INFO"):
-        self.pattern_name = pattern_name
-        self.pattern_regex = pattern_regex
-        self.severity = severity
+class ChainPattern:
+    def __init__(self, pattern_type: str, threshold: float):
+        self.pattern_type = pattern_type
+        self.threshold = threshold
+        self.detection_window = deque(maxlen=100)  # Sliding window für Pattern-Erkennung
 
 class ChainGuardian:
     def __init__(self):
-        self.patterns = []
-        self._initialize_default_patterns()
-    
-    def _initialize_default_patterns(self):
-        # Standard-Überwachungsmuster
-        self.patterns.extend([
-            ValidationPattern(
-                "Verschlüsselungsvalidierung", 
-                r"Hash-[A-Za-z0-9]+",
-                "CRITICAL"
-            ),
-            ValidationPattern(
-                "Verbindungsschlüssel", 
-                r"Schlüssel-\d+",
-                "WARNING"
-            ),
-            ValidationPattern(
-                "Sicherheitsaudit", 
-                r"Audit-[A-Za-z0-9\-]+",
-                "INFO"
-            )
-        ])
-    
-    def add_pattern(self, pattern: ValidationPattern):
-        self.patterns.append(pattern)
-    
-    def analyze_block(self, block) -> List[dict]:
-        findings = []
-        for pattern in self.patterns:
-            if re.search(pattern.pattern_regex, block.data):
-                findings.append({
-                    "block_index": block.index,
-                    "pattern_name": pattern.pattern_name,
-                    "severity": pattern.severity,
-                    "timestamp": block.timestamp,
-                    "matched_data": block.data
-                })
-        return findings
-
-class Block:
-    def __init__(self, index: int, prev_hash: str, timestamp: float, data: str, hash: str):
-        self.index = index
-        self.prev_hash = prev_hash
-        self.timestamp = timestamp
-        self.data = data
-        self.hash = hash
-        self.validation_results = []
-
-class EnhancedBlockchain:
-    def __init__(self):
-        self.chain = []
-        self.guardian = ChainGuardian()
-        self.create_genesis_block()
-
-    def create_genesis_block(self):
-        genesis_block = Block(
-            0, "0", time.time(), 
-            "Genesis Block: KettenWächter initialisiert", 
-            self._calculate_hash("0", time.time(), "Genesis Block: KettenWächter initialisiert")
-        )
-        self.chain.append(genesis_block)
-
-    def _calculate_hash(self, prev_hash: str, timestamp: float, data: str) -> str:
-        block_string = f"{prev_hash}{timestamp}{data}"
-        return hashlib.sha256(block_string.encode('utf-8')).hexdigest()
-
-    def add_block(self, data: str):
-        prev_block = self.chain[-1]
-        timestamp = time.time()
-        hash = self._calculate_hash(prev_block.hash, timestamp, data)
+        self.patterns = {}
+        self.alert_handlers = []
+        self.quarantine_blocks = []
+        self.threat_scores = {}
         
-        new_block = Block(
-            index=len(self.chain),
-            prev_hash=prev_block.hash,
-            timestamp=timestamp,
-            data=data,
-            hash=hash
-        )
+    def register_pattern(self, name: str, pattern: ChainPattern):
+        self.patterns[name] = pattern
         
-        # Führe Analyse durch
-        findings = self.guardian.analyze_block(new_block)
-        new_block.validation_results = findings
-        
-        self.chain.append(new_block)
-        return findings
+    def register_alert_handler(self, handler):
+        self.alert_handlers.append(handler)
 
-# Beispiel zur Verwendung
-if __name__ == "__main__":
-    blockchain = EnhancedBlockchain()
-    
-    # Füge einige Test-Blöcke hinzu
-    findings1 = blockchain.add_block("Verschlüsselungsvalidierung: Hash-XYZ123")
-    findings2 = blockchain.add_block("Verbindungsvalidierung: Schlüssel-9876")
-    findings3 = blockchain.add_block("Sicherheitsaudit: Audit-2023-001")
-    
-    # Zeige die Ergebnisse
-    print("\n=== KettenWächter Analyse ===")
-    for block in blockchain.chain[1:]:  # Skip genesis block
-        print(f"\nBlock #{block.index}:")
-        print(f"Data: {block.data}")
-        if block.validation_results:
-            print("Gefundene Muster:")
-            for result in block.validation_results:
-                print(f"- {result['pattern_name']} ({result['severity']})")
-        else:
-            print("Keine Muster gefunden")
+    def analyze_block(self, block: 'Block', blockchain: 'Blockchain') -> Dict[str, Any]:
+        threat_score = 0
+        anomalies = []
+
+        # Basis-Validierung
+        if not self._validate_block_integrity(block, blockchain):
+            self._trigger_alert("CRITICAL", "Block-Integrität verletzt!", block)
+            return {"valid": False, "threat_score": 1.0, "action": "quarantine"}
+
+        # Pattern-basierte Analyse
+        for pattern_name, pattern in self.patterns.items():
+            score = self._analyze_pattern(pattern, block, blockchain)
+            if score > pattern.threshold:
+                anomalies.append(f"Pattern '{pattern_name}' überschreitet Schwellenwert")
+                threat_score = max(threat_score, score)
+
+        # ML-basierte Anomalie-Erkennung
+        ml_score = self._ml_anomaly_detection(block, blockchain)
+        if ml_score > 0.8:  # Hoher Anomalie-Score
+            anomalies.append("ML-Anomalie erkannt")
+            threat_score = max(threat_score, ml_score)
+
+        # Aktionen basierend auf Threat-Score
+        action = self._determine_action(threat_score)
+        if action == "quarantine":
+            self.quarantine_blocks.append(block)
+            self._trigger_alert("WARNING", f"Block quarantäniert: {anomalies}", block)
+
+        return {
+            "valid": threat_score < 0.7,
+            "threat_score": threat_score,
+            "anomalies": anomalies,
+            "action": action
+        }
+
+    def _validate_block_integrity(self, block: 'Block', blockchain: 'Blockchain') -> bool:
+        # Erweiterte Integritätsprüfung
+        if block.index > 0:
+            prev_block = blockchain.chain[block.index - 1]
+            if block.prev_hash != prev_block.hash:
+                return False
+            if block.timestamp <= prev_block.timestamp:
+                return False
+        return True
+
+    def _analyze_pattern(self, pattern: ChainPattern, block: 'Block', blockchain: 'Blockchain') -> float:
+        # Pattern-spezifische Analyse
+        if pattern.pattern_type == "timing":
+            return self._analyze_timing_pattern(block, blockchain)
+        elif pattern.pattern_type == "data_similarity":
+            return self._analyze_data_similarity(block, blockchain)
+        return 0.0
+
+    def _ml_anomaly_detection(self, block: 'Block', blockchain: 'Blockchain') -> float:
+        # Simplified ML-based anomaly detection
+        features = self._extract_block_features(block)
+        # Hier könnte ein trainiertes ML-Modell verwendet werden
+        return np.random.random()  # Placeholder
+
+    def _determine_action(self, threat_score: float) -> str:
+        if threat_score > 0.9:
+            return "quarantine"
+        elif threat_score > 0.7:
+            return "warn"
+        return "accept"
+
+    def _trigger_alert(self, severity: str, message: str, block: 'Block'):
+        alert = {
+            "timestamp": time.time(),
+            "severity": severity,
+            "message": message,
+            "block_index": block.index,
+            "block_hash": block.hash
+        }
+        for handler in self.alert_handlers:
+            handler(alert)
+
+    def _extract_block_features(self, block: 'Block') -> List[float]:
+        # Feature extraction für ML
+        return [
+            block.timestamp,
+            len(str(block.data)),
+            len(block.hash),
+            # Weitere Features hier
+        ]
