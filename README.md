@@ -100,7 +100,13 @@ Are you a security enthusiast, developer, or cryptography expert? **Contribute t
 
 ### 📝 **To Do List**:
 - [x] Implement Nonce-based transaction validation
-- [x] Implement Ai Plugins Core
+- [-] Implement Ai Plugins Core
+
+- [x] ChainGuardian: A dedicated class for monitoring the blockchain
+- [x] ValidationPattern: Defines patterns to search for
+- [x] Advanced Analytics: Detects various patterns in the blockchain data
+- [x] Severity Levels: Different levels of importance for found patterns
+
 - [ ] Explore integrating with blockchain for decentralized validation
 - [ ] Improve seed phrase generation and private key management
 - [ ] Add support for different cryptographic algorithms
