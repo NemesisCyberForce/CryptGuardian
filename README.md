@@ -1,96 +1,135 @@
-# CryptGuardian – ChainGuardian Module
+# CryptGuardian – Advanced Blockchain Security Module
 
-**Version:** 0.1-alpha
-**Copyright:** 2025 Volkan Sah
+**Version:** 0.2-alpha
+**Copyright:** 2025 NemesisCyberForce
 
 ---
 
 ## Overview
 
-CryptGuardian is an experimental security module designed to monitor blockchain structures in real time.
-At its core, the **ChainGuardian** acts as a watchdog that:
+CryptGuardian is a single-file, advanced blockchain security module designed to **detect, analyze, and mitigate threats in real time**.
+It integrates **threat intelligence, pattern-based analysis, timing detection, and deep security alerts**, making it a robust tool for monitoring blockchain data integrity.
 
-* Validates block integrity
-* Performs pattern-based analysis (e.g., timing and data similarity)
-* Includes a simple ML-based anomaly detection component
-* Warns or quarantines suspicious blocks
+This module is **thread-safe** and built to test and block suspicious or malicious patterns automatically.
 
-The goal is to not only store blocks but also **detect unusual or malicious activity within the chain as it happens**.
+---
+
+## What’s New
+
+### Advanced Threat Intelligence
+
+* Detects SQL Injection, XSS, Command Injection, and Buffer Overflow patterns
+* Regex-based pattern analysis
+* Similarity-checking to catch replay attacks
+
+### Timing Attack Detection
+
+* Analyzes block timing patterns
+* Detects DDoS burst patterns
+* Sliding-window statistical analysis
+
+### Enhanced Alert System
+
+* Threat-specific mitigation suggestions
+* Risk scoring with prioritization
+* Color-coded alerts with detailed context
+
+### Deep Security Analysis
+
+* Multi-layer block validation
+* Consensus validator support
+* Comprehensive security reports
 
 ---
 
 ## Features
 
-* Block integrity validation (hash and timestamp)
-* Pattern-based analysis (timing, data similarity)
-* Basic ML-driven anomaly detection (currently using random scores as placeholder)
-* Quarantine system for suspicious blocks
-* Alert system with custom handlers (logging, email, Slack, etc.)
-* SmartBlockchain wrapper with integrated guardian logic
+* **Automatic threat detection:** Recognizes and blocks common attack vectors
+* **Replay attack detection:** Identifies duplicate or highly similar transactions
+* **Timing anomaly detection:** Flags unusual block intervals and bursts
+* **Quarantine system:** Suspicious blocks can be isolated
+* **Advanced alerting:** Alerts provide risk scores and actionable mitigation steps
+* **Thread-safe architecture:** Safe for multi-threaded environments
+* **Full blockchain reporting:** Statistics on blocks, quarantined entries, and validators
 
 ---
 
-## Project Structure
+## Demo & Testing
 
-```
-cryptguardian/
-├── chain_guardian.py      # Core: ChainGuardian & ChainPattern
-├── smart_blockchain.py    # Extended blockchain class with guardian integration
-├── example_usage.py       # Example usage with alerts
-```
+The module includes test scenarios that automatically simulate attack patterns:
 
----
+* SQL Injections → detected and blocked
+* XSS attempts → trigger alerts
+* Buffer Overflow patterns → flagged
+* Replay attacks (duplicate blocks) → intercepted
+* Timing anomalies → logged and reported
 
-## Installation
+To run the demo:
 
 ```bash
-git clone https://github.com/NemesisCyberForce/CryptGuardian/cryptguardian.git
-cd cryptguardian
-
-```
-
-Dependencies: Python standard libraries and **numpy**.
-
----
-
-## Quick Start Example
-
-```python
-from smart_blockchain import SmartBlockchain, SecurityException
-
-blockchain = SmartBlockchain()
-
-# Optional: register a custom alert handler
-def alert_handler(alert):
-    print(f"[{alert['severity']}] {alert['message']}")
-
-blockchain.guardian.register_alert_handler(alert_handler)
-
-try:
-    blockchain.add_block("Normal transaction #1")
-    blockchain.add_block("Suspicious transaction with unusual pattern")
-except SecurityException as e:
-    print(f"Security violation detected: {e}")
+python cryptguardian.py
 ```
 
 ---
 
 ## Roadmap
 
-* [x] Pattern detection (timing and data similarity)
-* [x] Alert system and quarantine functionality
-* [ ] Replace random-based ML detection with a proper model
-* [ ] Extend the pattern library (e.g., frequency analysis, network anomalies)
-* [ ] Optional blockchain visualization tools
+* ML-based anomaly detection
+* Advanced consensus mechanisms
+* Integration with external threat intelligence sources
+* Optional API/web dashboard for monitoring
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/yourusername/cryptguardian.git
+cd cryptguardian
+pip install -r requirements.txt  # minimal dependencies: requests, numpy
+```
+
+---
+
+## Usage Example
+
+```python
+from cryptguardian import SmartBlockchain, enhanced_alert_handler
+
+# Initialize blockchain
+blockchain = SmartBlockchain()
+blockchain.guardian.register_alert_handler(enhanced_alert_handler)
+blockchain.guardian.register_validator("validator_001")
+
+# Add blocks
+blockchain.add_block("Normal transaction")
+blockchain.add_block("SELECT * FROM users; DROP TABLE users;--")  # SQL Injection
+```
+
+---
+
+## Security Report
+
+```python
+report = blockchain.get_security_report()
+print(report)
+```
+
+Includes:
+
+* Chain length and validity
+* Number of quarantined blocks
+* Threat patterns detected
+* Registered validators
+* Basic statistics
 
 ---
 
 ## Disclaimer
 
-This is an **alpha-stage proof of concept**.
-Do not use in production environments.
+This is **alpha-stage software**. Use in production with caution.
+Designed for educational purposes and testing threat detection in blockchain scenarios.
 
----
 
 ## License
 ETHICAL SECURITY OPERATIONS LICENSE (ESOL v1.0)
