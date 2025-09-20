@@ -236,7 +236,12 @@ Chain Security Status:
 
 ## License & Legal
 
-**RESPONSIBLE SECURITY RESEARCH LICENSE**
+Licensed under the Apache License, Version 2.0
+
+#### ADDITIONAL TERMS:
+- This software is intended for legitimate security research and 
+- defensive purposes only. Users must comply with all applicable 
+- laws and regulations. Malicious use is strictly prohibited.
 
 **Copyright:** [Volkan Sah//NCF](https://github.com/volkansah)
 
