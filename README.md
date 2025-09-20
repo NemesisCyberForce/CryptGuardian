@@ -1,7 +1,7 @@
 # CryptGuardian – ChainGuardian Module
 
 **Version:** 0.1-alpha
-**Copyright:** 2025 NemesisCyberForce
+**Copyright:** 2025 Volkan Sah
 
 ---
 
