@@ -236,7 +236,7 @@ Chain Security Status:
 
 ## License & Legal
 
-**ETHICAL SECURITY OPERATIONS LICENSE (ESOL v1.0)**
+**RESPONSIBLE SECURITY RESEARCH LICENSE**
 
 **Copyright:** [Volkan Sah//NCF](https://github.com/volkansah)
 
