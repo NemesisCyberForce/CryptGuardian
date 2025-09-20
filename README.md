@@ -1,7 +1,6 @@
 # 🔐 CryptGuardian - coming soon 
 #### **Seed Validation Tools** - Secure Your Connections with Ease
-
-# Public creation project by NCF
+I wanted to play a little crazy
 
 ```
 cryptguardian/
