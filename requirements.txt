@@ -1,13 +1,14 @@
 # Uncomment only needed
-python-dotenv
-openai
-anthropic
-mistralai
-replicate
+# python-dotenv
+# openai
+# anthropic
+# mistralai
+# replicate
 requests
 numpy
-fastapi        
-uvicorn        
-flask           
-pytest          
+# fastapi
+# uvicorn
+# flask
+# pytest
+       
 
