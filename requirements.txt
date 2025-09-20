@@ -1,14 +1,40 @@
 # Uncomment only needed
-# python-dotenv
-# openai
-# anthropic
-# mistralai
-# replicate
-requests
-numpy
+# ###  for core  ###
+hashlib
+time
+secrets
+json
+threading
+typing
+dataclasses
+enum
+collections
+re
+# ###  ML-Anomalie-Detection ###
+# numpy 
+# scikit-learn p
+# pandas
+
+# ### Consensus-Mechanismen + Networking ###
+# requests 
+# asyncio 
+# websockets
+
+# ###Misk ###
 # fastapi
 # uvicorn
 # flask
 # pytest
+# python-dotenv
+
+# ### AI ###
+# openai
+# anthropic
+# mistralai
+# replicate
+
+
+
+
        
 
