@@ -84,7 +84,7 @@ python cryptguardian.py
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/cryptguardian.git
+git clone https://github.com/NemesisCyberForce/CryptGuardian//cryptguardian.git
 cd cryptguardian
 pip install -r requirements.txt  # minimal dependencies: requests, numpy
 ```
