@@ -1,18 +1,21 @@
-# ###  for core  ###
-hashlib
-time
-secrets
-json
-threading
-typing
-dataclasses
-enum
-collections
-re
+# ###  for core build  in used libs ###
+# hashlib
+# time
+# secrets
+# json
+# threading
+# typing
+# dataclasses
+# enum
+# collections
+# re
+
+
 # ###  ML-Anomalie-Detection ###
 # numpy 
-# scikit-learn p
+# scikit-learn
 # pandas
+
 
 # ### Consensus-Mechanismen + Networking ###
 # requests 
