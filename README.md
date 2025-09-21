@@ -3,7 +3,6 @@
 **Version:** 0.2-alpha  
 **Copyright:** 2025 NemesisCyberForce  
 
----
 
 ## Overview
 
@@ -11,7 +10,6 @@ CryptGuardian is a **zero-dependency**, advanced blockchain security module desi
 
 This module is **thread-safe**, **production-ready**, and built to automatically test and block suspicious or malicious patterns without external dependencies.
 
----
 
 ## What's New in v0.2-alpha
 
@@ -39,7 +37,6 @@ This module is **thread-safe**, **production-ready**, and built to automatically
 - **Comprehensive security reporting** with detailed analytics
 - **Quarantine system** with automatic threat isolation
 
----
 
 ## Core Features
 
@@ -72,8 +69,6 @@ This module is **thread-safe**, **production-ready**, and built to automatically
 - Concurrent operation support
 - Lock-based synchronization for critical sections
 - Production-ready multi-threading capabilities
-
----
 
 ## Technical Requirements
 
@@ -217,7 +212,7 @@ Chain Security Status:
 - Distributed validation networks
 - Caching and indexing improvements
 
----
+
 
 ## Production Deployment
 
@@ -231,7 +226,6 @@ Chain Security Status:
 - Adjust `similarity_threshold` based on false positive rates
 - Configure `block_timing_window` for your network characteristics
 - Optimize `burst_detection_window` for DDoS sensitivity
-
 ---
 
 ## License & Legal
@@ -252,7 +246,6 @@ Licensed under the Apache License, Version 2.0
 - Use responsibly for security research only  
 - Do not use for malicious activities
 
----
 
 ## Disclaimer
 
