@@ -1,3 +1,14 @@
+#  CryptGuardian Enhanced v.0.2-alpha
+# Autor: Volkan Kücükbudak
+# Autor-Uri: github.com/volkansah
+# Source: github.com/NemesisCyberForce/CryptGuardian/
+
+# Licensed under the Apache License, Version 2.0
+# ADDITIONAL TERMS:
+# This software is intended for legitimate security research and 
+# defensive purposes only. Users must comply with all applicable 
+# laws and regulations. Malicious use is strictly prohibited.
+
 import hashlib
 import time
 import secrets
