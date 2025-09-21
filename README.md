@@ -1,4 +1,5 @@
-# CryptGuardian – Advanced Blockchain Security Module
+# CryptGuardian
+##### Advanced Blockchain Security Module
 
 **Version:** 0.2-alpha  
 **Copyright:** 2025 NemesisCyberForce  
