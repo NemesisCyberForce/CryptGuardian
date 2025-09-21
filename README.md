@@ -1,5 +1,5 @@
 # CryptGuardian
-##### Advanced Blockchain Security Module
+##### Advanced Blockchain Security Module from a joke
 
 **Version:** 0.2-alpha  
 **Copyright:** 2025 NemesisCyberForce  
