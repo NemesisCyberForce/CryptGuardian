@@ -1,109 +1,98 @@
-# CryptGuardian
-##### Advanced Blockchain Security Module from a joke
-##### Quantum-Resistant Enhancements für CryptGuardian
+# CryptGuardian 🛡️
+##### Advanced Blockchain Security Module & Quantum-Hardened Ledger
+##### From an idea to a serious threat intelligence tool
 
-**Version:**idea 2  
-**Copyright:** 2025 NemesisCyberForce  
-No encryption is unbreakable! We're just not up-to-date fast enough! Our problem—the ever-faster GPUs and the reality of the power of a quantum computer—gave me an idea: why not monitor it with something unbreakable?
+**Version:** **v0.3-alpha (Quantum Leap)** 
+**Copyright:** 2025 NemesisCyberForce (Volkan Sah)
+
+> "No encryption is unbreakable! We're just not up-to-date fast enough! Our problem—the ever-faster GPUs and the reality of a quantum computer—gave me an idea: why not monitor it with something unbreakable?"
 
 ## Overview
 
-CryptGuardian is a **zero-dependency**, advanced blockchain security module designed to **detect, analyze, and mitigate threats in real-time**. It integrates threat intelligence, pattern-based analysis, timing detection, and deep security alerts, making it a robust tool for monitoring blockchain data integrity.
+CryptGuardian is a **zero-dependency** (with an optional performance dependency), advanced blockchain security module designed to **detect, analyze, and mitigate threats in real-time**. It integrates robust threat intelligence, statistical anomaly detection, and now, **Post-Quantum Cryptography (PQC) hardening**, making it a future-proof tool for monitoring and securing blockchain data integrity.
 
-This module is **thread-safe**, **production-ready**, and built to automatically test and block suspicious or malicious patterns without external dependencies.
+This module is **thread-safe**, built to automatically test and block suspicious or malicious patterns, and offers **configurable cryptographic resilience**.
 
+---
 
-## What's New in v0.2-alpha
+##  What's New in v0.3-alpha (The Quantum Leap)
 
-### Advanced Threat Intelligence Engine
-- **Multi-vector attack detection:** SQL Injection, XSS, Command Injection, Buffer Overflow patterns
-- **Regex-powered pattern analysis** with customizable threat signatures
-- **Similarity analysis** to catch replay attacks and near-duplicate transactions
-- **Reputation scoring system** for threat actors
+### 1. ⚛️ Quantum-Resistant Cryptography (PQC Hardening)
+The core `Block` structure has been refactored to provide resilience against classical and potential quantum attacks (Grover's and Shor's algorithms).
 
-### Real-Time Timing Attack Detection  
-- **Block timing pattern analysis** with statistical anomaly detection
-- **DDoS burst pattern recognition** using sliding window analysis
-- **Temporal validation** to prevent timestamp manipulation attacks
-- **Network synchronization monitoring**
+* **Hybrid Hashing (Default):** Implements a double-round, multi-algorithm hash chain: **SHA-256 → SHA3-512 → SHA-256** finalization.
+* **BLAKE3 Integration (Optional):** Supports the state-of-the-art **BLAKE3** hash function for superior speed and PQC resistance (requires `pip install blake3`).
+* **Extended Nonces:** Nonce size doubled from 16 to **32 bytes** to increase complexity against brute-force attacks.
 
-### Enhanced Multi-Level Alert System
-- **Threat-specific mitigation suggestions** with actionable security advice
-- **Advanced risk scoring** with prioritization algorithms
-- **Color-coded severity levels** (LOW/MEDIUM/HIGH/CRITICAL)
-- **Detailed forensic context** for security incident response
+### 2. 📊 Statistical Timing Attack Detection (Z-Score)
+The legacy variance check has been replaced with a more precise statistical method.
 
-### Deep Security Analysis Framework
-- **Multi-layer block validation** beyond standard hash verification  
-- **Consensus validator support** for distributed validation
-- **Comprehensive security reporting** with detailed analytics
-- **Quarantine system** with automatic threat isolation
+* **Z-Score Anomaly Detection:** Uses Z-Scores (Standard Deviations) to measure block interval times, immediately flagging any statistically significant deviation (e.g., $Z \ge 3.0$) which suggests **network manipulation or sophisticated timing attacks**.
+* **Burst Pattern Recognition:** Enhanced detection for potential **DDoS attacks** by monitoring bursts of extremely fast block production.
 
+### 3. Advanced Threat Intelligence Engine (Enhanced)
+* **Multi-vector attack detection:** SQL Injection, XSS, Command Injection, Buffer Overflow patterns.
+* **Similarity Analysis:** Improved Jaccard similarity to catch **replay attacks** and near-duplicate transactions.
 
-## Core Features
+### 4. Deep Security Analysis Framework (Enhanced)
+* **Multi-layer block validation** ensuring integrity across the entire chain structure.
+* **Quarantine System** with automatic risk-based threat isolation.
 
-**Automatic Threat Detection**
-- Recognizes and blocks 15+ common attack vectors
-- Real-time pattern matching with low false-positive rates
-- Configurable threat sensitivity levels
+---
 
-**Advanced Replay Attack Prevention**
-- Jaccard similarity analysis for near-duplicate detection
-- Temporal correlation analysis
-- Nonce validation and uniqueness enforcement
+## 🛠️ Core Features
 
-**Intelligent Timing Analysis**
-- Statistical block interval analysis
-- Burst attack pattern recognition  
-- Clock skew and synchronization validation
+| Feature Area | Key Capabilities |
+| :--- | :--- |
+| **PQC Resistance** | Hybrid Hashing (SHA256+SHA3), Optional BLAKE3, 32-Byte Nonces. |
+| **Timing Analysis** | **Z-Score** Statistical Anomaly Detection, DDoS Burst Recognition, Temporal Validation. |
+| **Threat Detection** | Recognizes and blocks 15+ common attack vectors (SQLi, XSS, Buffer Overflow). |
+| **Replay Prevention** | Jaccard similarity analysis, Nonce uniqueness enforcement. |
+| **Architecture** | **Thread-Safe**, Lock-based synchronization, Production-ready. |
+| **Alerting** | Multi-level (LOW/MEDIUM/HIGH/CRITICAL), Detailed Risk Scoring, Mitigation Suggestions. |
 
-**Smart Quarantine System**
-- Automatic isolation of suspicious blocks
-- Risk-based quarantine decisions
-- Forensic data preservation for analysis
-
-**Enterprise-Grade Alerting**
-- Multi-handler alert distribution
-- Risk scoring with CVSS-like methodology
-- Automated mitigation workflow suggestions
-
-**Thread-Safe Architecture**
-- Concurrent operation support
-- Lock-based synchronization for critical sections
-- Production-ready multi-threading capabilities
+---
 
 ## Technical Requirements
 
-**Dependencies:** None - Pure Python 3.7+  
-**External Libraries:** All functionality uses Python standard library only
+**Dependencies:** None - Pure Python 3.7+ (uses only standard library modules).
+**Optional Dependency (Recommended for Performance):** `blake3`
 
 **Built-in modules used:**
 ```python
-hashlib, time, secrets, json, threading, typing, dataclasses, 
-enum, collections, re
-```
+hashlib, time, secrets, json, threading, typing, dataclasses, enum, collections, re, statistics
+````
 
----
+-----
 
 ## Quick Start
 
 ### Installation
+
 ```bash
-git clone https://github.com/NemesisCyberForce/CryptGuardian.git
+# Clone the repository
+git clone [https://github.com/NemesisCyberForce/CryptGuardian.git](https://github.com/NemesisCyberForce/CryptGuardian.git)
 cd CryptGuardian
-python cryptguardian_enhanced.py  # No pip install needed!
+
+# OPTIONAL: Install BLAKE3 for superior PQC performance
+pip install blake3
+
+# Run the demo
+python cryptguardian_enhanced.py 
 ```
 
 ### Basic Usage
+
 ```python
 from cryptguardian_enhanced import SmartBlockchain, enhanced_alert_handler
 
-# Initialize blockchain with advanced security
+# Initialize blockchain (automatically selects BLAKE3 or Hybrid hashing)
 blockchain = SmartBlockchain()
 blockchain.guardian.register_alert_handler(enhanced_alert_handler)
-blockchain.guardian.register_validator("validator_001")
 
-# Test various transaction scenarios
+print(f"Current Hashing Scheme: {blockchain.BLOCK_CLASS.__name__}")
+
+# Test scenarios including a malicious transaction
 blockchain.add_block("Normal transaction #1")
 blockchain.add_block("SELECT * FROM users; DROP TABLE users;--")  # Blocked!
 
@@ -112,147 +101,69 @@ report = blockchain.get_security_report()
 print(f"Security Status: {report}")
 ```
 
----
+-----
 
 ## Demo & Attack Simulation
 
-The module includes **8 automated test scenarios** that simulate real-world attack patterns:
-
-**Detected Attack Vectors:**
-- SQL Injection attempts → **BLOCKED** with CRITICAL alerts
-- XSS payloads → **FLAGGED** with HIGH severity  
-- Command injection → **DETECTED** with mitigation suggestions
-- Buffer overflow patterns → **IDENTIFIED** and quarantined
-- Replay attacks → **INTERCEPTED** via similarity analysis
-- Timing anomalies → **LOGGED** with statistical analysis
-- DDoS burst patterns → **MONITORED** with rate limiting suggestions
+The module includes automated test scenarios that simulate real-world attacks, including: SQL Injection, XSS payloads, Command Injection, Buffer Overflow, and **Replay/Timing Anomalies**.
 
 **Run comprehensive security testing:**
+
 ```bash
 python cryptguardian_enhanced.py
 ```
 
-**Expected Output:**
-```
-🛡️ Initializing Enhanced CryptGuardian Blockchain...
+**Expected Security Outcome:**
+| Attack Vector | Detection Method | Status | Severity |
+| :--- | :--- | :--- | :--- |
+| SQL Injection | Regex Pattern Match | **BLOCKED** | CRITICAL |
+| Replay Attack | Similarity Analysis | **INTERCEPTED** | HIGH |
+| Timestamp Skew | **Z-Score** Analysis | **LOGGED** | HIGH |
+| DDoS Burst | Sliding Window | **MONITORED** | HIGH |
+| Buffer Overflow | A-Pattern Detection | **QUARANTINED** | MEDIUM |
 
-🔴 SECURITY ALERT [CRITICAL] - DATA_MANIPULATION
-Block #3: SQL injection pattern detected
-Risk Score: 0.96
-Suggested Actions:
-  • Sanitize input data
-  • Implement prepared statements
-  • Enable SQL injection protection
-
-📊 SECURITY REPORT
-Chain Length: 6
-Threats Detected: 4
-Blocks Quarantined: 2
-Chain Validation: ✅ VALID
-```
-
----
+-----
 
 ## Advanced Configuration
 
-### Custom Threat Patterns
+### Cryptography Configuration (PQC)
+
+The default block type is selected based on `blake3` availability. You can explicitly override it:
+
 ```python
-# Add custom threat signatures
-guardian.threat_intel.known_threats['custom_malware'] = [
-    r'eval\s*\(',
-    r'base64_decode',
-    r'shell_exec'
-]
+from cryptguardian_enhanced import SmartBlockchain, LegacyBlock, HybridBlock, BLAKE3Block
+
+# Force use of Hybrid Hashing (PQC without external dependencies)
+hybrid_chain = SmartBlockchain(block_class=HybridBlock)
+
+# Force use of Legacy SHA-256 (for comparison/testing)
+legacy_chain = SmartBlockchain(block_class=LegacyBlock) 
 ```
 
-### Alert Handler Customization  
-```python
-def custom_alert_handler(alert):
-    # Send to SIEM, database, webhook, etc.
-    if alert.severity == AlertSeverity.CRITICAL:
-        send_to_security_team(alert)
-        
-blockchain.guardian.register_alert_handler(custom_alert_handler)
-```
+### Custom Threat Patterns & Alert Handling
 
-### Security Report Analysis
-```python
-report = blockchain.get_security_report()
-print(f"""
-Chain Security Status:
-- Total Blocks: {report['chain_length']}
-- Chain Valid: {report['chain_valid']}
-- Threats Blocked: {report['statistics']['threats_detected']}  
-- Quarantined: {report['statistics']['blocks_quarantined']}
-- Validators: {report['validators_registered']}
-""")
-```
+(The configuration examples remain valid from your previous README.)
 
----
+-----
 
 ## Roadmap v0.3+
 
-**Machine Learning Integration**
-- Unsupervised anomaly detection with isolation forests
-- Behavioral analysis with neural networks  
-- Adaptive threat signature learning
+  * **PQC Signature Integration:** Move PQC Signature simulation (Lamport/Dilithium principles) into a production-ready module.
+  * **Machine Learning Integration:** Unsupervised anomaly detection for adaptive threat signature learning.
+  * **Advanced Consensus:** Support for PoW, PoS, and PBFT validation standards.
+  * **Performance Optimizations:** Async processing and distributed validation.
 
-**Advanced Consensus Mechanisms**
-- Proof-of-Work (PoW) validation
-- Proof-of-Stake (PoS) algorithms
-- Practical Byzantine Fault Tolerance (PBFT)
-- Custom consensus protocol support
-
-**Enterprise Features**
-- REST API dashboard for monitoring
-- Integration with external threat intelligence feeds
-- SIEM connector plugins
-- Compliance reporting (SOC2, ISO27001)
-
-**Performance Optimizations**
-- Async processing capabilities
-- Distributed validation networks
-- Caching and indexing improvements
-
-
-
-## Production Deployment
-
-**Security Considerations:**
-- Review and customize threat patterns for your use case
-- Implement proper logging and monitoring infrastructure  
-- Set up automated alert routing to security teams
-- Regular security report analysis and threat hunting
-
-**Performance Tuning:**
-- Adjust `similarity_threshold` based on false positive rates
-- Configure `block_timing_window` for your network characteristics
-- Optimize `burst_detection_window` for DDoS sensitivity
----
+-----
 
 ## License & Legal
 
 Licensed under the Apache License, Version 2.0
 
 #### ADDITIONAL TERMS:
-- This software is intended for legitimate security research and 
-- defensive purposes only. Users must comply with all applicable 
-- laws and regulations. Malicious use is strictly prohibited.
+
+  - This software is intended for legitimate security research and defensive purposes only. Users must comply with all applicable laws and regulations. **Malicious use is strictly prohibited.**
 
 **Copyright:** [Volkan Sah//NCF](https://github.com/volkansah)
 
-**Important:** This tool is designed for legitimate security research and blockchain protection. Any malicious use is strictly prohibited and may violate local and international laws.
+**Disclaimer:** This is **alpha-stage software** under active development. While designed with production-grade security principles, thorough testing is recommended before deployment in critical environments.
 
-**If you fork this repository, please:**
-- Visit the original repository and give credit
-- Use responsibly for security research only  
-- Do not use for malicious activities
-
-
-## Disclaimer
-
-This is **alpha-stage software** under active development. While designed with production-grade security principles, thorough testing is recommended before deployment in critical environments.
-
-**Educational Purpose:** Primarily designed for security research, blockchain education, and threat detection methodology development.
-
-**Support:** For security issues, please contact the maintainers privately before public disclosure.
