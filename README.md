@@ -3,7 +3,7 @@
 
 **Version:** 0.2-alpha  
 **Copyright:** 2025 NemesisCyberForce  
-
+No encryption is unbreakable! We're just not up-to-date fast enough! Our problem—the ever-faster GPUs and the reality of the power of a quantum computer—gave me an idea: why not monitor it with something unbreakable?
 
 ## Overview
 
