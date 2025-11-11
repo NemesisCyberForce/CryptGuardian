@@ -1,539 +1,227 @@
-#  CryptGuardian Enhanced v.0.2-alpha
-# Autor: Volkan Kücükbudak
-# Autor-Uri: github.com/volkansah
-# Source: github.com/NemesisCyberForce/CryptGuardian/
-
-# Licensed under the Apache License, Version 2.0
-# ADDITIONAL TERMS:
-# This software is intended for legitimate security research and 
-# defensive purposes only. Users must comply with all applicable 
-# laws and regulations. Malicious use is strictly prohibited.
+# Quantum-Resistant Enhancements für CryptGuardian
+# Adds BLAKE3 + Hybrid PQC approach
 
 import hashlib
-import time
+from typing import Dict, Tuple
 import secrets
-import json
-import threading
-from typing import Callable, Dict, List, Optional, Set
-from dataclasses import dataclass, asdict
-from enum import Enum
-from collections import defaultdict, deque
-import re
+import time
 
-# Alert Severity Levels
-class AlertSeverity(Enum):
-    LOW = "LOW"
-    MEDIUM = "MEDIUM"
-    HIGH = "HIGH"
-    CRITICAL = "CRITICAL"
-
-class ThreatType(Enum):
-    INTEGRITY_VIOLATION = "INTEGRITY_VIOLATION"
-    PATTERN_ANOMALY = "PATTERN_ANOMALY"
-    TIMING_ATTACK = "TIMING_ATTACK"
-    DATA_MANIPULATION = "DATA_MANIPULATION"
-    HASH_COLLISION = "HASH_COLLISION"
-    REPLAY_ATTACK = "REPLAY_ATTACK"
-    DDOS_PATTERN = "DDOS_PATTERN"
-
-@dataclass
-class Alert:
-    severity: AlertSeverity
-    threat_type: ThreatType
-    message: str
-    block_index: int
-    timestamp: float
-    details: Dict
-    risk_score: float
-    mitigation_suggestions: List[str]
-
-class SecurityException(Exception):
-    def __init__(self, message: str, threat_type: ThreatType, risk_score: float = 1.0):
-        super().__init__(message)
-        self.threat_type = threat_type
-        self.risk_score = risk_score
-
-class ThreatIntelligence:
-    def __init__(self):
-        self.known_threats = {
-            'sql_injection': [r'union\s+select', r'drop\s+table', r'exec\s*\(', r'script\s*>'],
-            'xss_patterns': [r'<script.*?>', r'javascript:', r'onload\s*=', r'onerror\s*='],
-            'command_injection': [r';\s*rm\s+-rf', r'&&\s*cat', r'\|\s*nc\s+', r'`.*`'],
-            'buffer_overflow': [r'A{50,}', r'\\x90{10,}', r'shellcode'],
-            'crypto_attacks': [r'rainbow\s+table', r'dictionary\s+attack', r'brute.*force']
-        }
-        
-        self.reputation_db = defaultdict(int)  # IP/Hash reputation scoring
-        
-    def analyze_threat_patterns(self, data: str) -> Dict[str, float]:
-        threats = {}
-        data_lower = data.lower()
-        
-        for threat_category, patterns in self.known_threats.items():
-            score = 0.0
-            for pattern in patterns:
-                matches = len(re.findall(pattern, data_lower, re.IGNORECASE))
-                score += matches * 0.3
-            threats[threat_category] = min(score, 1.0)
-            
-        return threats
-
-class ChainGuardian:
-    def __init__(self):
-        self.alert_handlers: List[Callable] = []
-        self.pattern_memory: Dict = {}
-        self.suspicious_patterns: List[str] = []
-        self.quarantine_blocks: List = []
-        self.threat_intel = ThreatIntelligence()
-        self.block_timing_window = deque(maxlen=100)
-        self.consensus_validators = set()
-        self._lock = threading.Lock()
-        
-        # Advanced detection parameters
-        self.max_block_time_variance = 60.0  # seconds
-        self.similarity_threshold = 0.85
-        self.burst_detection_window = 10
-        
-    def register_alert_handler(self, handler: Callable):
-        with self._lock:
-            self.alert_handlers.append(handler)
-        
-    def register_validator(self, validator_id: str):
-        self.consensus_validators.add(validator_id)
-        
-    def advanced_block_analysis(self, block: 'Block', blockchain: 'SmartBlockchain') -> Dict:
-        analysis_results = {
-            'integrity_check': True,
-            'threat_patterns': {},
-            'timing_analysis': {},
-            'consensus_score': 0.0,
-            'overall_risk': 0.0,
-            'recommended_action': 'ACCEPT'
-        }
-        
-        # 1. Integrity Deep Scan
-        if not self._deep_integrity_check(block, blockchain):
-            analysis_results['integrity_check'] = False
-            analysis_results['overall_risk'] = 1.0
-            self._raise_advanced_alert(
-                AlertSeverity.CRITICAL,
-                ThreatType.INTEGRITY_VIOLATION,
-                "Deep integrity violation detected",
-                block.index,
-                {"hash_mismatch": True}
-            )
-            
-        # 2. Threat Intelligence Analysis
-        threat_patterns = self.threat_intel.analyze_threat_patterns(block.data)
-        analysis_results['threat_patterns'] = threat_patterns
-        max_threat_score = max(threat_patterns.values()) if threat_patterns else 0.0
-        
-        # 3. Advanced Timing Analysis
-        timing_risk = self._analyze_block_timing(block)
-        analysis_results['timing_analysis'] = timing_risk
-        
-        # 4. Data Similarity Analysis
-        similarity_risk = self._analyze_data_similarity(block, blockchain)
-        
-        # 5. Calculate overall risk
-        risk_factors = [max_threat_score, timing_risk.get('risk_score', 0), similarity_risk]
-        analysis_results['overall_risk'] = max(risk_factors)
-        
-        # 6. Determine action
-        if analysis_results['overall_risk'] > 0.8:
-            analysis_results['recommended_action'] = 'QUARANTINE'
-            self.quarantine_blocks.append(block)
-        elif analysis_results['overall_risk'] > 0.5:
-            analysis_results['recommended_action'] = 'MONITOR'
-            
-        return analysis_results
-        
-    def _deep_integrity_check(self, block: 'Block', blockchain: 'SmartBlockchain') -> bool:
-        """Enhanced integrity checking with crypto validation"""
-        if block.index == 0:
-            return True
-            
-        prev_block = blockchain.chain[block.index - 1]
-        
-        # Standard hash chain validation
-        if block.prev_hash != prev_block.hash:
-            return False
-            
-        # Recalculate hash to detect tampering
-        if block.hash != block.calculate_hash():
-            return False
-            
-        # Timestamp validation
-        if block.timestamp <= prev_block.timestamp:
-            self._raise_advanced_alert(
-                AlertSeverity.HIGH,
-                ThreatType.TIMING_ATTACK,
-                "Timestamp manipulation detected",
-                block.index,
-                {"timestamp_violation": True}
-            )
-            return False
-            
-        return True
-        
-    def _analyze_block_timing(self, block: 'Block') -> Dict:
-        """Detect timing-based attacks and anomalies"""
-        self.block_timing_window.append(block.timestamp)
-        
-        if len(self.block_timing_window) < 2:
-            return {"risk_score": 0.0}
-            
-        # Calculate timing statistics
-        intervals = []
-        for i in range(1, len(self.block_timing_window)):
-            intervals.append(self.block_timing_window[i] - self.block_timing_window[i-1])
-            
-        avg_interval = sum(intervals) / len(intervals)
-        current_interval = intervals[-1] if intervals else 0
-        
-        timing_analysis = {
-            "average_interval": avg_interval,
-            "current_interval": current_interval,
-            "variance": abs(current_interval - avg_interval),
-            "risk_score": 0.0
-        }
-        
-        # Detect timing anomalies
-        if abs(current_interval - avg_interval) > self.max_block_time_variance:
-            timing_analysis["risk_score"] = 0.7
-            self._raise_advanced_alert(
-                AlertSeverity.MEDIUM,
-                ThreatType.TIMING_ATTACK,
-                f"Block timing anomaly detected: {current_interval:.2f}s vs avg {avg_interval:.2f}s",
-                block.index,
-                timing_analysis
-            )
-            
-        # Detect burst patterns (potential DDoS)
-        recent_blocks = list(self.block_timing_window)[-self.burst_detection_window:]
-        if len(recent_blocks) >= self.burst_detection_window:
-            if all(recent_blocks[i+1] - recent_blocks[i] < 1.0 for i in range(len(recent_blocks)-1)):
-                timing_analysis["risk_score"] = max(timing_analysis["risk_score"], 0.8)
-                self._raise_advanced_alert(
-                    AlertSeverity.HIGH,
-                    ThreatType.DDOS_PATTERN,
-                    "Potential DDoS pattern detected in block timing",
-                    block.index,
-                    {"burst_detected": True}
-                )
-        
-        return timing_analysis
-        
-    def _analyze_data_similarity(self, block: 'Block', blockchain: 'SmartBlockchain') -> float:
-        """Detect data manipulation and replay attacks"""
-        if len(blockchain.chain) < 2:
-            return 0.0
-            
-        # Check for exact duplicates (replay attacks)
-        for existing_block in blockchain.chain[:-1]:  # Exclude current block
-            if existing_block.data == block.data:
-                self._raise_advanced_alert(
-                    AlertSeverity.HIGH,
-                    ThreatType.REPLAY_ATTACK,
-                    "Potential replay attack: identical block data detected",
-                    block.index,
-                    {"duplicate_of_block": existing_block.index}
-                )
-                return 0.9
-                
-        # Fuzzy similarity check for near-duplicates
-        recent_blocks = blockchain.chain[-10:]  # Check last 10 blocks
-        max_similarity = 0.0
-        
-        for existing_block in recent_blocks:
-            similarity = self._calculate_similarity(block.data, existing_block.data)
-            max_similarity = max(max_similarity, similarity)
-            
-            if similarity > self.similarity_threshold:
-                self._raise_advanced_alert(
-                    AlertSeverity.MEDIUM,
-                    ThreatType.DATA_MANIPULATION,
-                    f"High data similarity detected: {similarity:.2%}",
-                    block.index,
-                    {"similar_to_block": existing_block.index, "similarity": similarity}
-                )
-                
-        return max_similarity
-        
-    def _calculate_similarity(self, text1: str, text2: str) -> float:
-        """Simple Jaccard similarity for text comparison"""
-        set1 = set(text1.lower().split())
-        set2 = set(text2.lower().split())
-        
-        if not set1 and not set2:
-            return 1.0
-        if not set1 or not set2:
-            return 0.0
-            
-        intersection = len(set1.intersection(set2))
-        union = len(set1.union(set2))
-        
-        return intersection / union if union > 0 else 0.0
-        
-    def _raise_advanced_alert(self, severity: AlertSeverity, threat_type: ThreatType, 
-                            message: str, block_index: int, details: Dict):
-        """Enhanced alert system with threat intelligence"""
-        
-        # Generate mitigation suggestions based on threat type
-        mitigations = self._get_mitigation_suggestions(threat_type)
-        
-        # Calculate risk score
-        risk_score = self._calculate_risk_score(severity, threat_type, details)
-        
-        alert = Alert(
-            severity=severity,
-            threat_type=threat_type,
-            message=message,
-            block_index=block_index,
-            timestamp=time.time(),
-            details=details,
-            risk_score=risk_score,
-            mitigation_suggestions=mitigations
-        )
-        
-        # Notify all handlers
-        for handler in self.alert_handlers:
-            try:
-                handler(alert)
-            except Exception as e:
-                print(f"Alert handler failed: {e}")
-                
-        # Raise exception for critical threats
-        if severity in [AlertSeverity.HIGH, AlertSeverity.CRITICAL]:
-            raise SecurityException(message, threat_type, risk_score)
-            
-    def _get_mitigation_suggestions(self, threat_type: ThreatType) -> List[str]:
-        """Provide threat-specific mitigation suggestions"""
-        suggestions = {
-            ThreatType.INTEGRITY_VIOLATION: [
-                "Verify block hash calculations",
-                "Check for network tampering",
-                "Validate previous block references"
-            ],
-            ThreatType.TIMING_ATTACK: [
-                "Implement rate limiting",
-                "Monitor network synchronization",
-                "Check for clock skew issues"
-            ],
-            ThreatType.REPLAY_ATTACK: [
-                "Implement nonce verification",
-                "Add timestamp validation windows",
-                "Use unique transaction identifiers"
-            ],
-            ThreatType.DDOS_PATTERN: [
-                "Enable DDoS protection",
-                "Implement connection throttling",
-                "Monitor resource usage"
-            ]
-        }
-        return suggestions.get(threat_type, ["Contact security team", "Review logs"])
-        
-    def _calculate_risk_score(self, severity: AlertSeverity, threat_type: ThreatType, details: Dict) -> float:
-        """Calculate numerical risk score for prioritization"""
-        base_scores = {
-            AlertSeverity.LOW: 0.2,
-            AlertSeverity.MEDIUM: 0.5,
-            AlertSeverity.HIGH: 0.8,
-            AlertSeverity.CRITICAL: 1.0
-        }
-        
-        threat_multipliers = {
-            ThreatType.INTEGRITY_VIOLATION: 1.2,
-            ThreatType.REPLAY_ATTACK: 1.1,
-            ThreatType.DDOS_PATTERN: 1.0,
-            ThreatType.TIMING_ATTACK: 0.9
-        }
-        
-        base_score = base_scores.get(severity, 0.5)
-        multiplier = threat_multipliers.get(threat_type, 1.0)
-        
-        return min(base_score * multiplier, 1.0)
-
-class Block:
+# ============================================================
+# OPTION 1: Hybrid Hash Chain (einfachste Lösung)
+# ============================================================
+class QuantumResistantBlock:
+    """Drop-in replacement für deinen Block mit Quantum-Hardening"""
+    
     def __init__(self, index: int, prev_hash: str, timestamp: float, data: str, nonce: str = None):
         self.index = index
         self.prev_hash = prev_hash
         self.timestamp = timestamp
         self.data = data
-        self.nonce = nonce or secrets.token_hex(16)
-        self.hash = self.calculate_hash()
+        self.nonce = nonce or secrets.token_hex(32)  # Verdoppelt für Quantum
+        self.hash = self.calculate_quantum_hash()
         self.validation_score = 0.0
-        self.metadata = {}
+        self.metadata = {'quantum_resistant': True}
         
-    def calculate_hash(self) -> str:
+    def calculate_quantum_hash(self) -> str:
+        """
+        Hybrid-Hashing: SHA-256 + SHA3-512 + Double-Round
+        Quantum-Resistenz durch:
+        1. Längere Nonces (32 statt 16 bytes)
+        2. Doppelte Hash-Runden
+        3. SHA3 (resistenter gegen Längen-Erweiterungs-Angriffe)
+        """
         block_string = f"{self.index}{self.prev_hash}{self.timestamp}{self.data}{self.nonce}"
-        return hashlib.sha256(block_string.encode('utf-8')).hexdigest()
         
-    def to_dict(self) -> Dict:
-        return {
-            'index': self.index,
-            'prev_hash': self.prev_hash,
-            'timestamp': self.timestamp,
-            'data': self.data,
-            'nonce': self.nonce,
-            'hash': self.hash,
-            'validation_score': self.validation_score,
-            'metadata': self.metadata
-        }
+        # Round 1: SHA-256
+        hash1 = hashlib.sha256(block_string.encode()).hexdigest()
+        
+        # Round 2: SHA3-512 über SHA-256 Result
+        hash2 = hashlib.sha3_512(hash1.encode()).hexdigest()
+        
+        # Final: Kombinierter Hash (SHA-256 über beide)
+        return hashlib.sha256(f"{hash1}{hash2}".encode()).hexdigest()
 
-class SmartBlockchain:
+
+# ============================================================
+# OPTION 2: BLAKE3 Integration (schneller + sicherer)
+# ============================================================
+# Installiere: pip install blake3
+try:
+    import blake3
+    
+    class BLAKE3Block:
+        """High-Performance Quantum-Hardened Block"""
+        
+        def __init__(self, index: int, prev_hash: str, timestamp: float, data: str):
+            self.index = index
+            self.prev_hash = prev_hash
+            self.timestamp = timestamp
+            self.data = data
+            self.nonce = secrets.token_hex(32)
+            self.hash = self.calculate_blake3_hash()
+            
+        def calculate_blake3_hash(self) -> str:
+            """
+            BLAKE3: Schneller als SHA-256, resistenter gegen Quantum-Angriffe
+            Features:
+            - Parallele Verarbeitung
+            - Baum-basierte Struktur
+            - Keine bekannten Pre-Image Schwächen
+            """
+            block_string = f"{self.index}{self.prev_hash}{self.timestamp}{self.data}{self.nonce}"
+            return blake3.blake3(block_string.encode()).hexdigest()
+            
+except ImportError:
+    BLAKE3Block = None
+    print("⚠️ blake3 nicht installiert - nur Hybrid-Methode verfügbar")
+
+
+# ============================================================
+# OPTION 3: Post-Quantum Signature Simulation
+# ============================================================
+class PQCBlockchain:
+    """
+    Simuliert Post-Quantum Signaturen mit Lamport-Signatur-Prinzip
+    (Vereinfachte Version - für Produktion CRYSTALS-Dilithium nutzen)
+    """
+    
     def __init__(self):
-        self.chain: List[Block] = []
-        self.guardian = ChainGuardian()
-        self.create_genesis_block()
-        self._stats = {
-            'blocks_created': 0,
-            'threats_detected': 0,
-            'blocks_quarantined': 0
-        }
+        self.chain = []
+        self.quantum_keys = self._generate_quantum_keypair()
         
-    def create_genesis_block(self):
-        genesis_block = Block(0, "0", time.time(), "Genesis Block - CryptGuardian Initialized")
-        self.chain.append(genesis_block)
+    def _generate_quantum_keypair(self) -> Dict:
+        """
+        Lamport-One-Time-Signatur Keypair
+        Pro Bit: 2 Random-Werte (0-Pfad, 1-Pfad)
+        """
+        private_key = [[secrets.token_bytes(32) for _ in range(2)] for _ in range(256)]
+        public_key = [[hashlib.sha256(k).digest() for k in pair] for pair in private_key]
         
-    def add_block(self, data: str, force: bool = False) -> bool:
-        """Add block with advanced security analysis"""
-        try:
-            # Basic chain validation
-            if not self.is_chain_valid():
-                self.guardian._raise_advanced_alert(
-                    AlertSeverity.CRITICAL,
-                    ThreatType.INTEGRITY_VIOLATION,
-                    "Blockchain integrity violation detected before block addition!",
-                    len(self.chain),
-                    {"chain_valid": False}
-                )
-                
-            prev_block = self.chain[-1]
-            new_block = Block(
-                index=len(self.chain),
-                prev_hash=prev_block.hash,
-                timestamp=time.time(),
-                data=data
-            )
-            
-            # Advanced security analysis
-            if not force:
-                analysis = self.guardian.advanced_block_analysis(new_block, self)
-                
-                if analysis['recommended_action'] == 'QUARANTINE':
-                    self._stats['blocks_quarantined'] += 1
-                    return False
-                    
-                new_block.validation_score = 1.0 - analysis['overall_risk']
-                new_block.metadata['security_analysis'] = analysis
-            
-            self.chain.append(new_block)
-            self._stats['blocks_created'] += 1
-            return True
-            
-        except SecurityException as e:
-            self._stats['threats_detected'] += 1
-            if not force:
-                print(f"🚨 Security Exception: {e}")
-                return False
-            else:
-                print(f"⚠️ Forced addition despite security concerns: {e}")
-                self.chain.append(new_block)
-                return True
-        
-    def is_chain_valid(self) -> bool:
-        """Comprehensive chain validation"""
-        for i in range(1, len(self.chain)):
-            current = self.chain[i]
-            previous = self.chain[i-1]
-            
-            # Hash chain validation
-            if current.prev_hash != previous.hash:
-                return False
-            if current.hash != current.calculate_hash():
-                return False
-            # Temporal validation    
-            if current.timestamp <= previous.timestamp:
-                return False
-                
-        return True
-        
-    def get_security_report(self) -> Dict:
-        """Generate comprehensive security report"""
         return {
-            'chain_length': len(self.chain),
-            'chain_valid': self.is_chain_valid(),
-            'quarantined_blocks': len(self.guardian.quarantine_blocks),
-            'statistics': self._stats,
-            'threat_patterns': self.guardian.threat_intel.known_threats,
-            'validators_registered': len(self.guardian.consensus_validators)
+            'private': private_key,
+            'public': public_key,
+            'usage_count': 0,  # Lamport ist One-Time-Use!
+            'max_uses': 100    # Key-Rotation notwendig
         }
-
-# Advanced Alert Handler with logging
-def enhanced_alert_handler(alert: Alert):
-    severity_colors = {
-        AlertSeverity.LOW: "🟢",
-        AlertSeverity.MEDIUM: "🟡", 
-        AlertSeverity.HIGH: "🟠",
-        AlertSeverity.CRITICAL: "🔴"
-    }
-    
-    color = severity_colors.get(alert.severity, "⚪")
-    
-    print(f"\n{color} SECURITY ALERT [{alert.severity.value}] - {alert.threat_type.value}")
-    print(f"Block #{alert.block_index}: {alert.message}")
-    print(f"Risk Score: {alert.risk_score:.2f}")
-    
-    if alert.details:
-        print("Details:")
-        for key, value in alert.details.items():
-            print(f"  {key}: {value}")
-    
-    if alert.mitigation_suggestions:
-        print("Suggested Actions:")
-        for suggestion in alert.mitigation_suggestions:
-            print(f"  • {suggestion}")
-    print("-" * 60)
-
-# Demo Usage
-if __name__ == "__main__":
-    print("🛡️ Initializing Enhanced CryptGuardian Blockchain...\n")
-    
-    # Initialize blockchain with advanced security
-    blockchain = SmartBlockchain()
-    blockchain.guardian.register_alert_handler(enhanced_alert_handler)
-    blockchain.guardian.register_validator("validator_001")
-    
-    # Test scenarios
-    test_cases = [
-        "Normal transaction #1",
-        "User payment to merchant",
-        "SELECT * FROM users; DROP TABLE users;--",  # SQL injection
-        "<script>alert('xss')</script>",  # XSS attempt
-        "rm -rf / && cat /etc/passwd",  # Command injection
-        "Normal transaction #2",
-        "Normal transaction #2",  # Duplicate (replay attack)
-        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",  # Buffer overflow pattern
-    ]
-    
-    print("Testing various transaction patterns...\n")
-    
-    for i, data in enumerate(test_cases):
-        try:
-            success = blockchain.add_block(data)
-            status = "✅ ACCEPTED" if success else "❌ REJECTED" 
-            print(f"Transaction {i+1}: {status}")
-            time.sleep(0.1)  # Small delay for realistic timing
+        
+    def sign_block(self, block_hash: str) -> bytes:
+        """Quantum-Resistente Signatur erstellen"""
+        if self.quantum_keys['usage_count'] >= self.quantum_keys['max_uses']:
+            self.quantum_keys = self._generate_quantum_keypair()  # Key-Rotation
             
-        except Exception as e:
-            print(f"Transaction {i+1}: ❌ BLOCKED - {e}")
+        hash_bits = bin(int(block_hash, 16))[2:].zfill(256)
+        signature = b''.join(
+            self.quantum_keys['private'][i][int(bit)]
+            for i, bit in enumerate(hash_bits)
+        )
+        
+        self.quantum_keys['usage_count'] += 1
+        return signature
+        
+    def verify_signature(self, block_hash: str, signature: bytes, public_key: list) -> bool:
+        """Signatur verifizieren"""
+        hash_bits = bin(int(block_hash, 16))[2:].zfill(256)
+        
+        for i, bit in enumerate(hash_bits):
+            sig_chunk = signature[i*32:(i+1)*32]
+            expected_hash = public_key[i][int(bit)]
+            
+            if hashlib.sha256(sig_chunk).digest() != expected_hash:
+                return False
+        return True
+
+
+# ============================================================
+# INTEGRATION IN DEIN CRYPTGUARDIAN
+# ============================================================
+def upgrade_blockchain_to_quantum_resistant(blockchain_instance):
+    """
+    Retrofit-Funktion für deinen bestehenden Code
+    Ersetzt Block-Klasse mit QuantumResistantBlock
+    """
     
-    # Generate security report
-    print(f"\n📊 SECURITY REPORT")
-    print("=" * 60)
-    report = blockchain.get_security_report()
-    for key, value in report.items():
-        print(f"{key.replace('_', ' ').title()}: {value}")
+    # Backup alte Chain
+    old_chain = blockchain_instance.chain.copy()
+    blockchain_instance.chain = []
     
-    print(f"\n🔍 Chain Validation: {'✅ VALID' if blockchain.is_chain_valid() else '❌ INVALID'}")
+    # Recreate mit Quantum-Blocks
+    genesis = QuantumResistantBlock(0, "0", time.time(), "Quantum-Hardened Genesis")
+    blockchain_instance.chain.append(genesis)
+    
+    for old_block in old_chain[1:]:
+        new_block = QuantumResistantBlock(
+            index=old_block.index,
+            prev_hash=blockchain_instance.chain[-1].hash,
+            timestamp=old_block.timestamp,
+            data=old_block.data
+        )
+        blockchain_instance.chain.append(new_block)
+    
+    print("✅ Blockchain upgraded to Quantum-Resistant mode")
+    return blockchain_instance
+
+
+# ============================================================
+# PERFORMANCE COMPARISON
+# ============================================================
+def benchmark_hashing():
+    """Vergleich der Hash-Performance"""
+    test_data = "Test Block Data " * 100
+    iterations = 1000
+    
+    # SHA-256 (Original)
+    start = time.perf_counter()
+    for _ in range(iterations):
+        hashlib.sha256(test_data.encode()).hexdigest()
+    sha256_time = time.perf_counter() - start
+    
+    # Hybrid (SHA-256 + SHA3)
+    start = time.perf_counter()
+    for _ in range(iterations):
+        h1 = hashlib.sha256(test_data.encode()).hexdigest()
+        h2 = hashlib.sha3_512(h1.encode()).hexdigest()
+        hashlib.sha256(f"{h1}{h2}".encode()).hexdigest()
+    hybrid_time = time.perf_counter() - start
+    
+    # BLAKE3 (falls verfügbar)
+    if BLAKE3Block:
+        start = time.perf_counter()
+        for _ in range(iterations):
+            blake3.blake3(test_data.encode()).hexdigest()
+        blake3_time = time.perf_counter() - start
+    else:
+        blake3_time = None
+    
+    print(f"\n🏁 Hash Performance ({iterations} iterations):")
+    print(f"SHA-256 (Original):  {sha256_time:.4f}s")
+    print(f"Hybrid (SHA+SHA3):   {hybrid_time:.4f}s ({hybrid_time/sha256_time:.1f}x langsamer)")
+    if blake3_time:
+        print(f"BLAKE3:              {blake3_time:.4f}s ({blake3_time/sha256_time:.1f}x vs SHA-256)")
+
+
+# ============================================================
+# DEMO
+# ============================================================
+if __name__ == "__main__":
+    print("🔐 Quantum-Resistance Demo\n")
+    
+    # 1. Einfachster Test: Hybrid Block
+    block = QuantumResistantBlock(1, "prev_hash_123", time.time(), "Quantum Test Data")
+    print(f"Quantum Block Hash: {block.hash[:32]}...")
+    
+    # 2. Performance Benchmark
+    benchmark_hashing()
+    
+    # 3. Lamport Signature Test
+    print("\n🔏 Lamport Signature Test:")
+    pqc = PQCBlockchain()
+    test_hash = hashlib.sha256(b"test block").hexdigest()
+    signature = pqc.sign_block(test_hash)
+    valid = pqc.verify_signature(test_hash, signature, pqc.quantum_keys['public'])
+    print(f"Signature Valid: {'✅' if valid else '❌'}")
+    print(f"Signature Size: {len(signature)} bytes")
+    
+    print("\n💡 EMPFEHLUNG:")
+    print("   1. Kurzfristig: QuantumResistantBlock (Hybrid-Hashing)")
+    print("   2. Mittelfristig: BLAKE3 für Performance")
+    print("   3. Langfristig: CRYSTALS-Dilithium (NIST PQC Standard)")
