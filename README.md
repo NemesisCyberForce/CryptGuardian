@@ -1,5 +1,6 @@
 # CryptGuardian
 ##### Advanced Blockchain Security Module from a joke
+##### Quantum-Resistant Enhancements für CryptGuardian
 
 **Version:** 0.2-alpha  
 **Copyright:** 2025 NemesisCyberForce  
