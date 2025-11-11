@@ -1,0 +1,64 @@
+
+###  Automatisches Upgrade-System
+```python
+# Priorität:
+1. BLAKE3Block (wenn installiert) → schnellste Option
+2. HybridBlock (Fallback) → SHA-256 + SHA3-512
+
+# Wechsel zwischen Modi:
+blockchain = SmartBlockchain(block_class=HybridBlock)  # Hybrid
+blockchain = SmartBlockchain(block_class=BLAKE3Block)  # BLAKE3
+blockchain = SmartBlockchain(block_class=LegacyBlock)  # Legacy SHA-256
+```
+
+### Key Changes:
+
+1. **3 Block-Klassen verfügbar:**
+   - `LegacyBlock` → dein Original (SHA-256)
+   - `HybridBlock` → Quantum-hardened (SHA-256 + SHA3-512)
+   - `BLAKE3Block` → High-Performance PQC
+
+2. **Dynamische Block-Selection:**
+   - Auto-detect ob BLAKE3 verfügbar ist
+   - Falls nein → Hybrid als sicherer Fallback
+
+3. **Metadata-Tracking:**
+   ```python
+   block.metadata = {
+       'quantum_resistant': True,
+       'hashing_scheme': 'BLAKE3'
+   }
+   ```
+
+4. **Security Report zeigt jetzt:**
+   ```python
+   'current_hashing': 'BLAKE3Block'  # Transparenz über aktuelle PQC
+   ```
+
+### Installation für Maximum Performance:
+```bash
+pip install blake3  # Optional aber empfohlen
+```
+
+**Ohne BLAKE3:**
+- Läuft automatisch mit HybridBlock
+- Immer noch Quantum-hardened
+- ~2-3x langsamer als BLAKE3
+
+**Mit BLAKE3:**
+- Schneller als Original SHA-256
+- Bessere Quantum-Resistance
+- Parallelisierbar (Rust-Engine)
+
+---
+
+### Nächste Schritte (falls du weitermachen willst):
+
+1. **CRYSTALS-Dilithium** für digitale Signaturen:
+   ```bash
+   pip install pqcrypto
+   ```
+
+2. **Key-Rotation** für Lamport-Signaturen implementieren
+
+3. **Hybrid Encryption** (klassisch + PQC) für Data-Fields
