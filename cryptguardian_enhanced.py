@@ -7,7 +7,7 @@ import secrets
 import time
 
 # ============================================================
-# OPTION 1: Hybrid Hash Chain (einfachste Lösung)
+# OPTION 1: Hybrid Hash Chain (simple solution)
 # ============================================================
 class QuantumResistantBlock:
     """Drop-in replacement für deinen Block mit Quantum-Hardening"""
@@ -43,7 +43,7 @@ class QuantumResistantBlock:
 
 
 # ============================================================
-# OPTION 2: BLAKE3 Integration (schneller + sicherer)
+# OPTION 2: BLAKE3 Integration (fastr +secure)
 # ============================================================
 # Installiere: pip install blake3
 try:
@@ -100,8 +100,8 @@ class PQCBlockchain:
         return {
             'private': private_key,
             'public': public_key,
-            'usage_count': 0,  # Lamport ist One-Time-Use!
-            'max_uses': 100    # Key-Rotation notwendig
+            'usage_count': 0,  # Lamport is One-Time-Use!
+            'max_uses': 100    # Key-Rotation needed
         }
         
     def sign_block(self, block_hash: str) -> bytes:
