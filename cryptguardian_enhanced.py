@@ -202,26 +202,26 @@ def benchmark_hashing():
 # ============================================================
 # DEMO
 # ============================================================
-if __name__ == "__main__":
-    print("🔐 Quantum-Resistance Demo\n")
+#if __name__ == "__main__":
+#    print("🔐 Quantum-Resistance Demo\n")
+#    
+#    # 1. Einfachster Test: Hybrid Block
+#    block = QuantumResistantBlock(1, "prev_hash_123", time.time(), "Quantum Test Data")
+#    print(f"Quantum Block Hash: {block.hash[:32]}...")
+#    
+#    # 2. Performance Benchmark
+#    benchmark_hashing()
+#    
+#    # 3. Lamport Signature Test
+#    print("\n🔏 Lamport Signature Test:")
+#    pqc = PQCBlockchain()
+#    test_hash = hashlib.sha256(b"test block").hexdigest()
+#    signature = pqc.sign_block(test_hash)
+#    valid = pqc.verify_signature(test_hash, signature, pqc.quantum_keys['public'])
+#    print(f"Signature Valid: {'✅' if valid else '❌'}")
+#    print(f"Signature Size: {len(signature)} bytes")
     
-    # 1. Einfachster Test: Hybrid Block
-    block = QuantumResistantBlock(1, "prev_hash_123", time.time(), "Quantum Test Data")
-    print(f"Quantum Block Hash: {block.hash[:32]}...")
-    
-    # 2. Performance Benchmark
-    benchmark_hashing()
-    
-    # 3. Lamport Signature Test
-    print("\n🔏 Lamport Signature Test:")
-    pqc = PQCBlockchain()
-    test_hash = hashlib.sha256(b"test block").hexdigest()
-    signature = pqc.sign_block(test_hash)
-    valid = pqc.verify_signature(test_hash, signature, pqc.quantum_keys['public'])
-    print(f"Signature Valid: {'✅' if valid else '❌'}")
-    print(f"Signature Size: {len(signature)} bytes")
-    
-    print("\n💡 EMPFEHLUNG:")
-    print("   1. Kurzfristig: QuantumResistantBlock (Hybrid-Hashing)")
-    print("   2. Mittelfristig: BLAKE3 für Performance")
-    print("   3. Langfristig: CRYSTALS-Dilithium (NIST PQC Standard)")
+#    print("\n💡 EMPFEHLUNG:")
+#    print("   1. Kurzfristig: QuantumResistantBlock (Hybrid-Hashing)")
+#    print("   2. Mittelfristig: BLAKE3 für Performance")
+#    print("   3. Langfristig: CRYSTALS-Dilithium (NIST PQC Standard)")
