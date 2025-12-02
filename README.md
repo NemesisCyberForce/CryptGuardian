@@ -1,5 +1,6 @@
 # CryptGuardian
 #### Advanced Blockchain Security Module & Quantum-Hardened Ledger
+an idea
 
 **Version:** **v0.3-alpha (Quantum Leap)**
 
