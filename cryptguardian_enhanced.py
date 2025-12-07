@@ -258,6 +258,6 @@ def benchmark_hashing():
 #     print(f"Signature Size: {len(signature)} bytes")
 #     
 #     print("\nRECOMMENDATION:")
-#     print("   1. Short-term: QuantumResistantBlock (Hybrid Hashing) - Immediate security increase")
-#     print("   2. Mid-term: BLAKE3 for superior performance and PQC-strength")
-#     print("   3. Long-term: Implement CRYSTALS-Dilithium/Kyber (NIST PQC Standards) for production signatures")
+#     print("    1. Short-term: QuantumResistantBlock (Hybrid Hashing) - Immediate security increase")
+#     print("    2. Mid-term: BLAKE3 for superior performance and PQC-strength")
+#     print("    3. Long-term: Implement CRYSTALS-Dilithium/Kyber (NIST PQC Standards) for production signatures")
