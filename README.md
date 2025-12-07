@@ -20,6 +20,7 @@ Modern cryptography faces two accelerating risks:
 
 1.  AI-based automated attacks
 2.  Quantum algorithms that weaken classical cryptosystems
+3.  Read [Mathematical Hallucination](mathematical_hallucination.md)
 
 CryptGuardian explores mitigation strategies through:
 
