@@ -1,6 +1,6 @@
 # The 2000-Year Crypto Challenge: Mathematical Insanity
 
-## Or: "How Two Idiots Accidentally Built Encryption That Outlives Civilizations"
+## Or: "How Two Idiots and an AI Accidentally Built Encryption That Outlives Civilizations"
 
 ### ⚠️ WARNING: This document contains gratuitous mathematics and questionable life choices
 
