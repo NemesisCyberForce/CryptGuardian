@@ -1,14 +1,14 @@
 # CryptGuardian
 #### Advanced Blockchain Security Module & Quantum-Hardened Ledger
-an idea
+###### an idea
+CryptGuardian is a consideration for optimizing defenses. We view security as an ongoing process because, in the face of new technologies like AI and quantum computers, there is **no unbreakable encryption**. Our goal is to make compromise as unlikely, difficult, and costly as possible.
+
 
 **Version:** **v0.3-alpha (Quantum Leap)**
-
-**Copyright:** 2025 NemesisCyberForce (Volkan Sah)
-
------
+> **Copyright:** 2025 NCF (Volkan Sah)
 
 ### Overview
+
 
 > "No encryption is unbreakable—especially when new threats, catalyzed by **fast-paced AI development and the looming reality of quantum computing**, emerge faster than our defenses. This challenge—the ever-accelerating pace of digital compromise—drove the creation of CryptGuardian. Why just patch, when you can monitor and secure your ledger with something truly resilient?"
 
@@ -152,16 +152,19 @@ legacy_chain = SmartBlockchain(block_class=LegacyBlock)
 
 *(The configuration examples remain valid from your previous README.)*
 
------
+
 
 ### Roadmap v0.3+
 
-  * **PQC Signature Integration:** Move PQC Signature simulation (Lamport/Dilithium principles) into a production-ready module.
-  * **Machine Learning Integration:** Unsupervised anomaly detection for adaptive threat signature learning.
-  * **Advanced Consensus:** Support for PoW, PoS, and PBFT validation standards.
-  * **Performance Optimizations:** Async processing and distributed validation.
+  * **PQC Signature Integration:** Move PQC Signature simulation (Lamport/Dilithium principles) into a production-ready module.
+  * **Hybrid Key Exchange (Kyber KEM):** Integrate the **CRYSTALS-Kyber** Key Encapsulation Mechanism (KEM) to secure AES key exchange, making the final data encryption quantum-resistant.
+  * **Machine Learning Integration:** Unsupervised anomaly detection for adaptive threat signature learning.
+  * **Advanced Consensus:** Support for PoW, PoS, and PBFT validation standards.
+  * **Performance Optimizations:** Async processing and distributed validation.
 
------
+
+
+
 
 ### License & Legal
 
