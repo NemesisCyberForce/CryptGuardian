@@ -29,7 +29,7 @@ CryptGuardian explores mitigation strategies through:
   * Threat intelligence and pattern analysis
   * Safer block validation and monitoring
 
-This project is an **idea**, a technical experiment — not a guaranteed quantum-safe framework.
+This project is an **idea** to learn who you are, a technical experiment — not a guaranteed quantum-safe framework.
 
 -----
 
