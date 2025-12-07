@@ -1,116 +1,208 @@
-# CryptGuardian
-#### Advanced Blockchain Security Module & Quantum-Hardened Ledger
-###### an idea
-CryptGuardian is a consideration for optimizing defenses. We view security as an ongoing process because, in the face of new technologies like AI and quantum computers, there is **no unbreakable encryption**. Our goal is to make compromise as unlikely, difficult, and costly as possible.
+# CryptGuardian 🛡️
+
+### Quantum-Hardened Blockchain Security Module
+
+### Concept Prototype by Volkan Kücükbudak
+
+CryptGuardian is a **research-level concept**, created from the perspective of a developer concerned about long-term security for distributed systems. It is not a final product, but an exploration of defense strategies against modern and future threats, including **AI-assisted attacks** and **quantum cryptanalysis**.
+
+The objective is simple:
+Increase the cost, complexity, and feasibility barrier for attackers.
+No system is unbreakable — but it can be made impractical to break.
+
+Version: **v0.3-alpha (Quantum Leap)**
+Copyright © 2025 NCF
 
 
-**Version:** **v0.3-alpha (Quantum Leap)**
-> **Copyright:** 2025 NCF (Volkan Sah)
+## Purpose
 
-### Overview
+Modern cryptography faces two accelerating risks:
 
+1.  AI-based automated attacks
+2.  Quantum algorithms that weaken classical cryptosystems
 
-> "No encryption is unbreakable—especially when new threats, catalyzed by **fast-paced AI development and the looming reality of quantum computing**, emerge faster than our defenses. This challenge—the ever-accelerating pace of digital compromise—drove the creation of CryptGuardian. Why just patch, when you can monitor and secure your ledger with something truly resilient?"
+CryptGuardian explores mitigation strategies through:
 
-CryptGuardian is an advanced blockchain security module designed to **detect, analyze, and mitigate threats in real-time**. It integrates robust threat intelligence, statistical anomaly detection, and **Post-Quantum Cryptography (PQC) hardening**, making it a future-proof tool for monitoring and securing blockchain data integrity.
+  * Quantum-hardened hashing
+  * Post-Quantum signature simulation
+  * **Timing anomaly detection**
+  * Threat intelligence and pattern analysis
+  * Safer block validation and monitoring
 
-This module is **thread-safe**, built to automatically test and block suspicious or malicious patterns, and offers **configurable cryptographic resilience**.
-
------
-
-### What's New in v0.3-alpha (The Quantum Leap)
-
-#### 1\. Quantum-Resistant Cryptography (PQC Hardening)
-
-The core `Block` structure has been refactored to provide resilience against classical and potential quantum attacks (Grover's and Shor's algorithms).
-
-  * **Hybrid Hashing (Default):** Implements a double-round, multi-algorithm hash chain: **SHA-256 $\rightarrow$ SHA3-512 $\rightarrow$ SHA-256** finalization.
-  * **BLAKE3 Integration (Optional):** Supports the state-of-the-art **BLAKE3** hash function for superior speed and PQC resistance (requires `pip install blake3`).
-  * **Extended Nonces:** Nonce size doubled from 16 to **32 bytes** to increase complexity against brute-force attacks.
-
-#### 2\. Statistical Timing Attack Detection (Z-Score)
-
-The legacy variance check has been replaced with a more precise statistical method for improved detection of network manipulation.
-
-  * **Z-Score Anomaly Detection:** Uses **Z-Scores** (Standard Deviations) to measure block interval times, immediately flagging any statistically significant deviation (e.g., $Z \ge 3.0$) which suggests network manipulation or sophisticated **timing attacks**.
-  * **Burst Pattern Recognition:** Enhanced detection for potential DDoS attacks by monitoring bursts of extremely fast block production.
-
-#### 3\. Advanced Threat Intelligence Engine (Enhanced)
-
-  * **Multi-vector attack detection:** Improved pattern recognition for threats including SQL Injection, XSS, Command Injection, and Buffer Overflow.
-  * **Similarity Analysis:** Improved **Jaccard similarity** to catch replay attacks and near-duplicate transactions.
-
-#### 4\. Deep Security Analysis Framework (Enhanced)
-
-  * Multi-layer block validation ensuring integrity across the entire chain structure.
-  * Quarantine System with automatic risk-based threat isolation.
+This project is an **idea**, a technical experiment — not a guaranteed quantum-safe framework.
 
 -----
 
-### Core Features
+## Quantum Leap Enhancements (v0.3-alpha)
 
-| Feature Area | Key Capabilities |
-| :--- | :--- |
-| **PQC Resistance** | Hybrid Hashing (SHA256+SHA3), Optional BLAKE3, 32-Byte Nonces. |
-| **Timing Analysis** | Z-Score Statistical Anomaly Detection, DDoS Burst Recognition, Temporal Validation. |
-| **Threat Detection** | Recognizes and blocks 15+ common attack vectors (SQLi, XSS, Buffer Overflow). |
-| **Replay Prevention** | Jaccard similarity analysis, Nonce uniqueness enforcement. |
-| **Architecture** | **Thread-Safe**, Lock-based synchronization, Production-ready. |
-| **Alerting** | Multi-level (LOW/MEDIUM/HIGH/CRITICAL), Detailed Risk Scoring, Mitigation Suggestions. |
+### Hybrid Quantum-Resistant Hashing
 
------
+The default block type applies:
 
-### Technical Requirements
+  * SHA-256 → SHA3-512 → SHA-256 (double-round hashing)
+  * 32-byte nonces (twice the classical size)
+  * Structure hardened against Grover-like search acceleration
 
-**Dependencies:** None - Pure Python 3.7+ (uses only standard library modules).
+### Optional BLAKE3 Integration
 
-**Optional Dependency (Recommended for Performance):** `blake3`
+If installed, **BLAKE3** provides:
 
-**Built-in modules used:**
+  * Higher performance
+  * Wider internal state
+  * Tree-based hashing
 
-```python
-hashlib, time, secrets, json, threading, typing, dataclasses, enum, collections, re, statistics
-```
-
-### Quick Start
-
-#### Installation
+Requires:
 
 ```bash
-# Clone the repository
-git clone [https://github.com/NemesisCyberForce/CryptGuardian.git](https://github.com/NemesisCyberForce/CryptGuardian.git)
-cd CryptGuardian
-
-# OPTIONAL: Install BLAKE3 for superior PQC performance
 pip install blake3
-
-# Run the demo
-python cryptguardian_enhanced.py 
 ```
 
-#### Basic Usage
+### PQC Signature Simulation (Lamport Principle)
+
+A simplified Lamport One-Time Signature model demonstrates:
+
+  * Large PQC key sizes
+  * One-time usage constraints
+  * Binary-path signature generation
+  * Hash-based verification
+
+This prepares the groundwork for future Dilithium/Kyber integration.
+
+-----
+
+## Full Quantum-Resistant Code (Included as Reference)
+
+The following classes and functions are the core elements of the **Quantum Leap** strategy, implementing hybrid hashing and Post-Quantum Signatures:
 
 ```python
-from cryptguardian_enhanced import SmartBlockchain, enhanced_alert_handler
+# Quantum-Resistant Enhancements for CryptGuardian
+# Adds BLAKE3 + Hybrid PQC approach
 
-# Initialize blockchain (automatically selects BLAKE3 or Hybrid hashing)
-blockchain = SmartBlockchain()
-blockchain.guardian.register_alert_handler(enhanced_alert_handler)
+import hashlib
+from typing import Dict, Tuple
+import secrets
+import time
+import binascii
 
-print(f"Current Hashing Scheme: {blockchain.BLOCK_CLASS.__name__}")
+# ============================================================
+# OPTION 1: Hybrid Hash Chain (A simple, immediate PQC solution)
+# ============================================================
+class QuantumResistantBlock:
+    """Drop-in replacement for your existing Block class with Quantum-Hardening"""
+    
+    def __init__(self, index: int, prev_hash: str, timestamp: float, data: str, nonce: str = None):
+        self.index = index
+        self.prev_hash = prev_hash
+        self.timestamp = timestamp
+        self.data = data
+        # Doubled Nonce length (64 chars / 32 bytes) for increased quantum difficulty
+        self.nonce = nonce or secrets.token_hex(32)
+        self.hash = self.calculate_quantum_hash()
+        self.validation_score = 0.0
+        self.metadata = {'quantum_resistant': True}
+        
+    def calculate_quantum_hash(self) -> str:
+        """
+        Hybrid Hashing: SHA-256 + SHA3-512 + Double-Round
+        """
+        block_string = f"{self.index}{self.prev_hash}{self.timestamp}{self.data}{self.nonce}"
+        
+        # Round 1: SHA-256
+        hash1 = hashlib.sha256(block_string.encode()).hexdigest()
+        
+        # Round 2: SHA3-512 over the SHA-256 Result
+        hash2 = hashlib.sha3_512(hash1.encode()).hexdigest()
+        
+        # Final: Combined Hash (SHA-256 over both results)
+        return hashlib.sha256(f"{hash1}{hash2}".encode()).hexdigest()
 
-# Test scenarios including a malicious transaction
-blockchain.add_block("Normal transaction #1")
-blockchain.add_block("SELECT * FROM users; DROP TABLE users;--") # Blocked!
 
-# Generate comprehensive security report
-report = blockchain.get_security_report()
-print(f"Security Status: {report}")
+# ============================================================
+# OPTION 2: BLAKE3 Integration (fast and quantum-safe hash)
+# ============================================================
+# Installation: pip install blake3
+try:
+    import blake3
+    
+    class BLAKE3Block:
+        """High-Performance Quantum-Hardened Block, using the modern BLAKE3 hash."""
+        
+        def __init__(self, index: int, prev_hash: str, timestamp: float, data: str):
+            self.index = index
+            self.prev_hash = prev_hash
+            self.timestamp = timestamp
+            self.data = data
+            self.nonce = secrets.token_hex(32) # Standardized long nonce
+            self.hash = self.calculate_blake3_hash()
+            
+        def calculate_blake3_hash(self) -> str:
+            """BLAKE3 is fast and designed for modern, multi-core systems."""
+            block_string = f"{self.index}{self.prev_hash}{self.timestamp}{self.data}{self.nonce}"
+            return blake3.blake3(block_string.encode()).hexdigest()
+            
+except ImportError:
+    BLAKE3Block = None
+
+
+# ============================================================
+# OPTION 3: Post-Quantum Signature Simulation (Lamport Principle)
+# ============================================================
+class PQCBlockchain:
+    """Simulates Post-Quantum Signatures based on the Lamport One-Time Signature principle."""
+    
+    def __init__(self):
+        self.chain = []
+        self.quantum_keys = self._generate_quantum_keypair()
+        
+    def _generate_quantum_keypair(self) -> Dict:
+        """Generates a Lamport One-Time Signature Keypair (16KB key size simulated)."""
+        private_key = [[secrets.token_bytes(32) for _ in range(2)] for _ in range(256)]
+        public_key = [[hashlib.sha256(k).digest() for k in pair] for pair in private_key]
+        
+        return {
+            'private': private_key,
+            'public': public_key,
+            'usage_count': 0,
+            'max_uses': 100
+        }
+        
+    def sign_block(self, block_hash: str) -> bytes:
+        """Creates the Quantum-Resistant Signature."""
+        if self.quantum_keys['usage_count'] >= self.quantum_keys['max_uses']:
+            self.quantum_keys = self._generate_quantum_keypair()
+            
+        hash_bits = bin(int(block_hash, 16))[2:].zfill(256)
+        
+        signature = b''.join(
+            self.quantum_keys['private'][i][int(bit)]
+            for i, bit in enumerate(hash_bits)
+        )
+        
+        self.quantum_keys['usage_count'] += 1
+        return signature
+        
+    def verify_signature(self, block_hash: str, signature: bytes, public_key: list) -> bool:
+        """Verifies the PQC signature against the public key."""
+        hash_bits = bin(int(block_hash, 16))[2:].zfill(256)
+        
+        for i, bit in enumerate(hash_bits):
+            sig_chunk = signature[i*32:(i+1)*32]
+            expected_hash = public_key[i][int(bit)]
+            
+            if hashlib.sha256(sig_chunk).digest() != expected_hash:
+                return False
+        return True
+
+# ... (Integration and Benchmarking Functions follow in the full code)
 ```
 
-### Z-Score Anomaly Detection
-```
+-----
 
+## Z-Score Timing Anomaly Detection
+
+This module provides an analytical defense against latency-based attacks or anomalies in the execution time of block operations, which can indicate malicious activity or resource exhaustion.
+
+```python
 import numpy as np
 from typing import List, Tuple
 
@@ -122,129 +214,105 @@ def calculate_anomaly_zscore(
     """
     Calculates the Z-Score for a new measurement relative to historical data 
     and checks if it exceeds a specified anomaly threshold (default: 3.0).
-
-    Args:
-        historical_times: List of past process execution times (e.g., block signing).
-        new_time_measurement: The current time measurement to evaluate.
-        threshold: The Z-Score threshold for flagging an anomaly (e.g., 3.0 for 99.7% confidence).
-
-    Returns:
-        A tuple containing (Z-Score, Is_Anomaly_Flag).
     """
     if len(historical_times) < 2:
-        # Not enough data to calculate variance reliably
         return 0.0, False
 
-    # 1. Calculate Mean (mu)
     mu = np.mean(historical_times)
-
-    # 2. Calculate Standard Deviation (sigma)
     sigma = np.std(historical_times)
 
-    # Avoid division by zero if all times are identical (unlikely in real world)
     if sigma == 0:
         return 0.0, False
 
-    # 3. Calculate the Z-Score (Z)
     # Z = (Value - Mean) / Standard Deviation
     z_score = (new_time_measurement - mu) / sigma
 
-    # 4. Check for Anomaly
     is_anomaly = abs(z_score) > threshold
 
     return z_score, is_anomaly
 
-# --- Demo Usage ---
+# --- Demo Usage (Snippet) ---
 
-# Simulate historical times (e.g., signature times in seconds)
-# The time is normally around 0.05 seconds.
-past_times = [0.051, 0.049, 0.050, 0.052, 0.048, 0.050, 0.051, 0.049]
-
-# A) Normal, expected measurement
-normal_time = 0.0505
-z_norm, anomaly_norm = calculate_anomaly_zscore(past_times, normal_time)
-
-# B) Deviant measurement (too slow - possible attack/resource shortage)
-slow_time = 0.065 # Significantly slower
-z_slow, anomaly_slow = calculate_anomaly_zscore(past_times, slow_time)
-
-# C) Extremely fast measurement (very unlikely for real work, but detectable)
-fast_time = 0.040 
-z_fast, anomaly_fast = calculate_anomaly_zscore(past_times, fast_time)
-
-
-# Output
-print(f"Historical Mean Time: {np.mean(past_times):.4f}s, Standard Deviation: {np.std(past_times):.4f}s")
-print("-" * 50)
-print(f"Measurement A ({normal_time:.4f}s): Z-Score={z_norm:.2f}, Anomaly: {anomaly_norm}")
-print(f"Measurement B ({slow_time:.4f}s): Z-Score={z_slow:.2f}, Anomaly: {anomaly_slow} <-- Slow Timing Anomaly!")
-print(f"Measurement C ({fast_time:.4f}s): Z-Score={z_fast:.2f}, Anomaly: {anomaly_fast}")
-
+# past_times = [0.051, 0.049, 0.050, 0.052, 0.048, 0.050, 0.051, 0.049]
+# slow_time = 0.065 
+# z_slow, anomaly_slow = calculate_anomaly_zscore(past_times, slow_time)
+# # Expected: Anomaly: True
 ```
-### Demo & Attack Simulation
 
-The module includes automated test scenarios that simulate real-world attacks, including: SQL Injection, XSS payloads, Command Injection, Buffer Overflow, and Replay/Timing Anomalies.
+-----
 
-**Run comprehensive security testing:**
+## What This Prototype Demonstrates
+
+  * Hybrid block hashing with increased post-quantum resistance
+  * BLAKE3 option for high-performance blockchain hashing
+  * Lamport-inspired signature simulation
+  * Defensive timing analytics
+  * Detection of common attack vectors
+  * Simplified anomaly and replay detection logic
+  * Thread-safe design ideas for production networks
+
+This is a **conceptual research tool**, not a finished product.
+
+-----
+
+## Installation
+
+```bash
+git clone https://github.com/NemesisCyberForce/CryptGuardian.git
+cd CryptGuardian
+
+pip install blake3      # optional
+python cryptguardian_enhanced.py
+```
+
+-----
+
+## Example Usage
+
+```python
+from cryptguardian_enhanced import SmartBlockchain, enhanced_alert_handler
+
+blockchain = SmartBlockchain()
+blockchain.guardian.register_alert_handler(enhanced_alert_handler)
+
+blockchain.add_block("Normal transaction")
+blockchain.add_block("SELECT * FROM users; DROP TABLE users;--")
+```
+
+-----
+
+## Attack Simulation
+
+Start the full suite:
 
 ```bash
 python cryptguardian_enhanced.py
 ```
 
-**Expected Security Outcome:**
-
-| Attack Vector | Detection Method | Status | Severity |
-| :--- | :--- | :--- | :--- |
-| SQL Injection | Regex Pattern Match | **BLOCKED** | CRITICAL |
-| Replay Attack | Similarity Analysis | **INTERCEPTED** | HIGH |
-| Timestamp Skew | **Z-Score** Analysis | **LOGGED** | HIGH |
-| DDoS Burst | Sliding Window | **MONITORED** | HIGH |
-| Buffer Overflow | A-Pattern Detection | **QUARANTINED** | MEDIUM |
+Expected outcomes include blocked injections, anomaly flags, timestamp skew detection, and replay defense.
 
 -----
 
-### Advanced Configuration
+## Roadmap
 
-#### Cryptography Configuration (PQC)
+  * Proper PQC Signatures (Dilithium)
+  * Kyber KEM for secure symmetric key exchange
+  * Optional machine learning anomaly detection
+  * Async engine and distributed validation
+  * Multiple consensus mode support (PoW/PoS/PBFT)
 
-The default block type is selected based on `blake3` availability. You can explicitly override it:
+-----
 
-```python
-from cryptguardian_enhanced import SmartBlockchain, LegacyBlock, HybridBlock, BLAKE3Block
+## License
 
-# Force use of Hybrid Hashing (PQC without external dependencies)
-hybrid_chain = SmartBlockchain(block_class=HybridBlock)
+Apache License 2.0
 
-# Force use of Legacy SHA-256 (for comparison/testing)
-legacy_chain = SmartBlockchain(block_class=LegacyBlock) 
-```
+Use only for legal research and defensive analysis.
 
-#### Custom Threat Patterns & Alert Handling
+-----
 
-*(The configuration examples remain valid from your previous README.)*
+## Disclaimer
 
-
-
-### Roadmap v0.3+
-
-  * **PQC Signature Integration:** Move PQC Signature simulation (Lamport/Dilithium principles) into a production-ready module.
-  * **Hybrid Key Exchange (Kyber KEM):** Integrate the **CRYSTALS-Kyber** Key Encapsulation Mechanism (KEM) to secure AES key exchange, making the final data encryption quantum-resistant.
-  * **Machine Learning Integration:** Unsupervised anomaly detection for adaptive threat signature learning.
-  * **Advanced Consensus:** Support for PoW, PoS, and PBFT validation standards.
-  * **Performance Optimizations:** Async processing and distributed validation.
-
-
-
-
-
-### License & Legal
-
-Licensed under the Apache License, Version 2.0
-
-#### ADDITIONAL TERMS:
-
-  * This software is intended for legitimate security research and defensive purposes only. Users must comply with all applicable laws and regulations. **Malicious use is strictly prohibited.**
-
-**Copyright:** [Volkan Sah//NCF](https://github.com/volkansah)
-
-**Disclaimer:** This is **alpha-stage software** under active development. While designed with production-grade security principles, thorough testing is recommended before deployment in critical environments.
+This is an **alpha-stage idea** built by a developer exploring how to harden systems against future threats.
+Not production-ready. Not guaranteed secure.
+It is a research exercise in resilience, not a final solution.
