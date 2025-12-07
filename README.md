@@ -108,8 +108,79 @@ report = blockchain.get_security_report()
 print(f"Security Status: {report}")
 ```
 
------
+### Z-Score Anomaly Detection
+```
 
+import numpy as np
+from typing import List, Tuple
+
+def calculate_anomaly_zscore(
+    historical_times: List[float], 
+    new_time_measurement: float, 
+    threshold: float = 3.0
+) -> Tuple[float, bool]:
+    """
+    Calculates the Z-Score for a new measurement relative to historical data 
+    and checks if it exceeds a specified anomaly threshold (default: 3.0).
+
+    Args:
+        historical_times: List of past process execution times (e.g., block signing).
+        new_time_measurement: The current time measurement to evaluate.
+        threshold: The Z-Score threshold for flagging an anomaly (e.g., 3.0 for 99.7% confidence).
+
+    Returns:
+        A tuple containing (Z-Score, Is_Anomaly_Flag).
+    """
+    if len(historical_times) < 2:
+        # Not enough data to calculate variance reliably
+        return 0.0, False
+
+    # 1. Calculate Mean (mu)
+    mu = np.mean(historical_times)
+
+    # 2. Calculate Standard Deviation (sigma)
+    sigma = np.std(historical_times)
+
+    # Avoid division by zero if all times are identical (unlikely in real world)
+    if sigma == 0:
+        return 0.0, False
+
+    # 3. Calculate the Z-Score (Z)
+    # Z = (Value - Mean) / Standard Deviation
+    z_score = (new_time_measurement - mu) / sigma
+
+    # 4. Check for Anomaly
+    is_anomaly = abs(z_score) > threshold
+
+    return z_score, is_anomaly
+
+# --- Demo Usage ---
+
+# Simulate historical times (e.g., signature times in seconds)
+# The time is normally around 0.05 seconds.
+past_times = [0.051, 0.049, 0.050, 0.052, 0.048, 0.050, 0.051, 0.049]
+
+# A) Normal, expected measurement
+normal_time = 0.0505
+z_norm, anomaly_norm = calculate_anomaly_zscore(past_times, normal_time)
+
+# B) Deviant measurement (too slow - possible attack/resource shortage)
+slow_time = 0.065 # Significantly slower
+z_slow, anomaly_slow = calculate_anomaly_zscore(past_times, slow_time)
+
+# C) Extremely fast measurement (very unlikely for real work, but detectable)
+fast_time = 0.040 
+z_fast, anomaly_fast = calculate_anomaly_zscore(past_times, fast_time)
+
+
+# Output
+print(f"Historical Mean Time: {np.mean(past_times):.4f}s, Standard Deviation: {np.std(past_times):.4f}s")
+print("-" * 50)
+print(f"Measurement A ({normal_time:.4f}s): Z-Score={z_norm:.2f}, Anomaly: {anomaly_norm}")
+print(f"Measurement B ({slow_time:.4f}s): Z-Score={z_slow:.2f}, Anomaly: {anomaly_slow} <-- Slow Timing Anomaly!")
+print(f"Measurement C ({fast_time:.4f}s): Z-Score={z_fast:.2f}, Anomaly: {anomaly_fast}")
+
+```
 ### Demo & Attack Simulation
 
 The module includes automated test scenarios that simulate real-world attacks, including: SQL Injection, XSS payloads, Command Injection, Buffer Overflow, and Replay/Timing Anomalies.
