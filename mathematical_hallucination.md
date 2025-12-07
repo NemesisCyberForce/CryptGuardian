@@ -12,7 +12,7 @@
 
 **Everyone else:** "That's overkill, SHA-256 is fine!"
 
-**Us:** "Hold my beer... let's do the math." 🍺
+**Me:** "Hold my beer... let's do the math." 🍺
 
 
 
