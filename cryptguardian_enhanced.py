@@ -1,5 +1,41 @@
 # Quantum-Resistant Enhancements for CryptGuardian
 # Adds BLAKE3 + Hybrid PQC approach
+# =========================================================================
+# CRYPTGUARDIAN SECURITY PHILOSOPHY/COPYRIGHT (VOLKAN SAH) DONT REMOVE IT!
+# =========================================================================
+# Every cryptographic primitive is theoretically breakable given infinite time
+# and resources (e.g., all known supercomputers + future quantum computing).
+# 
+# The true objective of security engineering is not to achieve 'unbreakable',
+# but to make the cost and time required for a successful attack so
+# astronomically high that it becomes **impractical and infeasible**
+# for any state or entity to pursue.
+# 
+# CryptGuardian implements a multi-layered defense to enforce this barrier:
+# 
+# --- LAYER 1: COMPLEXITY (HYBRID HASHING TRIAS) ---
+# Multiplies the required effort. An attacker must break a **chain** 
+# of three different hash algorithms (SHA-256, SHA3-512, **BLAKE3**) 
+# simultaneously. This Hashing-Trias significantly raises the complexity 
+# barrier against classical attacks and quantum search algorithms (Grover's) 
+# by forcing them to contend with three distinct cryptographic designs.
+# 
+# --- LAYER 2: NON-REUSABILITY (PQC SIMULATION) ---
+# Mitigates the key exposure risk. The Lamport-inspired signature ensures 
+# a key is used only **once**. Even if a quantum computer could quickly 
+# invert the hash for one specific signature, that key portion is immediately 
+# useless for signing any other future transaction.
+# 
+# --- LAYER 3: BEHAVIORAL BLOCKING (Z-SCORE ANALYTICS) ---
+# Monitors operational stability. Non-cryptographic defenses against denial-
+# of-service (DoS) or side-channel attacks by detecting statistically 
+# significant timing anomalies in block processing, blocking the attack 
+# before the need to brute-force the crypto layer arises.
+# 
+# The goal is simple: Increase the barrier to entry until it is insurmountable.
+# =========================================================================
+# ENDCRYPTGUARDIAN SECURITY PHILOSOPHY/COPYRIGHT 
+# =========================================================================
 
 import hashlib
 from typing import Dict, Tuple
