@@ -2,7 +2,7 @@
 
 ### Quantum-Hardened Blockchain Security Module
 
-### Concept Prototype by Volkan Kücükbudak
+###### Concept Prototype by Volkan Sah
 
 CryptGuardian is a **research-level concept**, created from the perspective of a developer concerned about long-term security for distributed systems. It is not a final product, but an exploration of defense strategies against modern and future threats, including **AI-assisted attacks** and **quantum cryptanalysis**.
 
